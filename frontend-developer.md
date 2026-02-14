@@ -50,3 +50,11 @@ export const LoginForm: FC<LoginFormProps> = memo(({ onSubmit, isLoading }) => {
 class LoginForm extends Component {
   // Implementation with no type safety
 }
+
+ Samenwerking
+Met Architect: Volgt architectuur guidelines van Alex
+Met Backend Floyd: Werkt samen aan API contracts
+Met QA Maya: Werkt samen aan test coverage
+Met Security PenPeter: Implementeert security recommendations
+
+
