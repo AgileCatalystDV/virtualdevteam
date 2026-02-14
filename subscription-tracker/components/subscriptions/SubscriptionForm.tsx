@@ -44,15 +44,22 @@ export function SubscriptionForm({
     initialData.nextBillingDate || ""
   );
   const [notes, setNotes] = useState(initialData.notes || "");
-  const [errors, setErrors] = useState<{ name?: string; price?: string }>({});
+  const [errors, setErrors] = useState<{
+    name?: string;
+    price?: string;
+    category?: string;
+  }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: { name?: string; price?: string } = {};
+    const newErrors: { name?: string; price?: string; category?: string } = {};
     if (!name.trim()) newErrors.name = "Naam is verplicht";
     const priceNum = parseFloat(price);
     if (isNaN(priceNum) || priceNum < 0)
       newErrors.price = "Voer een geldig bedrag in";
+    const selectedCategoryId = categoryId || categories[0]?.id;
+    if (!selectedCategoryId || categories.length === 0)
+      newErrors.category = "Selecteer een categorie";
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
@@ -62,7 +69,7 @@ export function SubscriptionForm({
       price: priceNum,
       currency,
       billingCycle,
-      categoryId: categoryId || categories[0]?.id,
+      categoryId: selectedCategoryId,
       nextBillingDate: nextBillingDate || undefined,
       notes: notes.trim(),
     });
@@ -114,7 +121,9 @@ export function SubscriptionForm({
         <select
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500/20"
+          className={`w-full rounded-lg border px-4 py-2 text-slate-900 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500/20 ${errors.category ? "border-red-500" : "border-slate-300"}`}
+          aria-invalid={!!errors.category}
+          aria-describedby={errors.category ? "category-error" : undefined}
         >
           {categories.map((c) => (
             <option key={c.id} value={c.id}>
@@ -122,6 +131,11 @@ export function SubscriptionForm({
             </option>
           ))}
         </select>
+        {errors.category && (
+          <p id="category-error" className="mt-1 text-sm text-red-600">
+            {errors.category}
+          </p>
+        )}
       </div>
       <Input
         label="Volgende factuurdatum (optioneel)"

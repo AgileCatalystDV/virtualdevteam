@@ -42,15 +42,13 @@ export function SubscriptionCard({
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              {category && (
-                <span
-                  className="text-lg"
-                  title={category.name}
-                  style={{ color: category.color }}
-                >
-                  {category.icon}
-                </span>
-              )}
+              <span
+                className="text-lg"
+                title={category?.name ?? "Onbekende categorie"}
+                style={{ color: category?.color ?? "#6B7280" }}
+              >
+                {category?.icon ?? "📦"}
+              </span>
               <h3 className="text-lg font-semibold text-slate-900 truncate">
                 {subscription.name}
               </h3>

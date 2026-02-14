@@ -10,6 +10,7 @@ export function getMonthlyEquivalent(
   price: number,
   billingCycle: BillingCycle
 ): number {
+  if (price < 0) return 0;
   switch (billingCycle) {
     case "monthly":
       return price;

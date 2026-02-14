@@ -4,9 +4,9 @@ import { useSubscriptionStore } from "@/lib/store";
 import { getMonthlyEquivalent, formatPrice } from "@/lib/utils";
 
 export function DashboardSummary() {
-  const { subscriptions } = useSubscriptionStore();
-
-  const activeSubscriptions = subscriptions.filter((s) => s.isActive);
+  const activeSubscriptions = useSubscriptionStore(
+    (s) => s.getActiveSubscriptions()
+  );
 
   const monthlyTotal = activeSubscriptions.reduce(
     (sum, sub) => sum + getMonthlyEquivalent(sub.price, sub.billingCycle),

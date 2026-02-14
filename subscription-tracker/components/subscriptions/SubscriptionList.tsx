@@ -4,10 +4,11 @@ import { useSubscriptionStore } from "@/lib/store";
 import { SubscriptionCard } from "./SubscriptionCard";
 
 export function SubscriptionList() {
-  const { subscriptions, getCategory, deleteSubscription } =
-    useSubscriptionStore();
-
-  const activeSubscriptions = subscriptions.filter((s) => s.isActive);
+  const activeSubscriptions = useSubscriptionStore(
+    (s) => s.getActiveSubscriptions()
+  );
+  const getCategory = useSubscriptionStore((s) => s.getCategory);
+  const deleteSubscription = useSubscriptionStore((s) => s.deleteSubscription);
 
   if (activeSubscriptions.length === 0) {
     return (

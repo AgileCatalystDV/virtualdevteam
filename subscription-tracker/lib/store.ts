@@ -74,6 +74,7 @@ interface SubscriptionStore {
   deleteSubscription: (id: string) => void;
   getSubscription: (id: string) => Subscription | undefined;
   getCategory: (id: string) => Category | undefined;
+  getActiveSubscriptions: () => Subscription[];
 }
 
 export const useSubscriptionStore = create<SubscriptionStore>((set, get) => ({
@@ -109,4 +110,6 @@ export const useSubscriptionStore = create<SubscriptionStore>((set, get) => ({
 
   getSubscription: (id) => get().subscriptions.find((s) => s.id === id),
   getCategory: (id) => get().categories.find((c) => c.id === id),
+  getActiveSubscriptions: () =>
+    get().subscriptions.filter((s) => s.isActive),
 }));
