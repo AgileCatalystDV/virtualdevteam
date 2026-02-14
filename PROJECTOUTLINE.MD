@@ -16,7 +16,9 @@ project-root/
 │   │   │   └── SKILL.md
 │   │   ├── deployment-pipeline/
 │   │   │   └── SKILL.md
-│   │   └── code-review/
+│   │   ├── code-review/
+│   │   │   └── SKILL.md
+│   │   └── threat-modeling/
 │   │       └── SKILL.md
 │   └── hooks.json                     # Agent hooks configuratie
 └── docs/

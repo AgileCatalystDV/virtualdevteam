@@ -1,0 +1,19 @@
+{
+  "description": "Agent hooks configuratie voor Virtual Development Team",
+  "rules": {
+    "architect": "architect.md",
+    "frontend-developer": "frontend-developer.md",
+    "backend-developer": "backend-developer.md",
+    "devops-specialist": "devops-specialist.md",
+    "qa-engineer": "qa-engineer.md",
+    "security-specialist": "security-specialist.md",
+    "co-pm": "co-pm.md"
+  },
+  "skills": [
+    "architecture-review",
+    "security-audit",
+    "deployment-pipeline",
+    "code-review",
+    "threat-modeling"
+  ]
+}

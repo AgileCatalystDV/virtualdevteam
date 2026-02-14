@@ -1,0 +1,21 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Subscription Tracker - Virtual Dev Team",
+  description: "Overzicht van al je abonnementen — wat betaal je, wanneer, en hoeveel in totaal?",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="nl">
+      <body className="antialiased">
+        {children}
+      </body>
+    </html>
+  );
+}
