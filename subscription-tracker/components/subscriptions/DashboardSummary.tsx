@@ -1,11 +1,14 @@
 "use client";
 
-import { useSubscriptionStore } from "@/lib/store";
+import { useMemo } from "react";
+import { useApiData } from "@/components/providers/ApiDataProvider";
 import { getMonthlyEquivalent, formatPrice } from "@/lib/utils";
 
 export function DashboardSummary() {
-  const activeSubscriptions = useSubscriptionStore(
-    (s) => s.getActiveSubscriptions()
+  const { subscriptions } = useApiData();
+  const activeSubscriptions = useMemo(
+    () => subscriptions.filter((s) => s.isActive),
+    [subscriptions]
   );
 
   const monthlyTotal = activeSubscriptions.reduce(

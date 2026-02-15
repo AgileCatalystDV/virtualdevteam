@@ -1,14 +1,15 @@
 "use client";
 
-import { useSubscriptionStore } from "@/lib/store";
+import { useMemo } from "react";
+import { useApiData } from "@/components/providers/ApiDataProvider";
 import { SubscriptionCard } from "./SubscriptionCard";
 
 export function SubscriptionList() {
-  const activeSubscriptions = useSubscriptionStore(
-    (s) => s.getActiveSubscriptions()
+  const { subscriptions, getCategory, deleteSubscription } = useApiData();
+  const activeSubscriptions = useMemo(
+    () => subscriptions.filter((s) => s.isActive),
+    [subscriptions]
   );
-  const getCategory = useSubscriptionStore((s) => s.getCategory);
-  const deleteSubscription = useSubscriptionStore((s) => s.deleteSubscription);
 
   if (activeSubscriptions.length === 0) {
     return (

@@ -48,18 +48,28 @@ export function SubscriptionForm({
     name?: string;
     price?: string;
     category?: string;
+    notes?: string;
   }>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors: { name?: string; price?: string; category?: string } = {};
+    const newErrors: {
+      name?: string;
+      price?: string;
+      category?: string;
+      notes?: string;
+    } = {};
     if (!name.trim()) newErrors.name = "Naam is verplicht";
+    else if (name.length > 100) newErrors.name = "Naam mag max. 100 tekens zijn";
     const priceNum = parseFloat(price);
     if (isNaN(priceNum) || priceNum < 0)
       newErrors.price = "Voer een geldig bedrag in";
+    if (priceNum > 999999.99)
+      newErrors.price = "Bedrag mag max. 999.999,99 zijn";
     const selectedCategoryId = categoryId || categories[0]?.id;
     if (!selectedCategoryId || categories.length === 0)
       newErrors.category = "Selecteer een categorie";
+    if (notes.length > 500) newErrors.notes = "Notities mogen max. 500 tekens zijn";
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
@@ -84,6 +94,7 @@ export function SubscriptionForm({
         placeholder="bijv. Netflix"
         error={errors.name}
         required
+        maxLength={100}
       />
       <div className="grid grid-cols-2 gap-4">
         <Input
@@ -91,6 +102,7 @@ export function SubscriptionForm({
           type="number"
           step="0.01"
           min="0"
+          max="999999.99"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="9.99"
@@ -152,8 +164,13 @@ export function SubscriptionForm({
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Optionele notities"
           rows={2}
-          className="w-full rounded-lg border border-slate-300 px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500/20"
+          maxLength={500}
+          className={`w-full rounded-lg border px-4 py-2 text-slate-900 placeholder-slate-400 focus:border-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-500/20 ${errors.notes ? "border-red-500" : "border-slate-300"}`}
         />
+        {errors.notes && (
+          <p className="mt-1 text-sm text-red-600">{errors.notes}</p>
+        )}
+        <p className="mt-1 text-xs text-slate-500">{notes.length}/500</p>
       </div>
       <div className="flex gap-3 pt-2">
         <Button type="submit">{submitLabel}</Button>

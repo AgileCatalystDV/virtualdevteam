@@ -12,6 +12,11 @@ const catIds = {
   fitness: "cat-fitness",
   media: "cat-media",
   cloud: "cat-cloud",
+  insurance: "cat-insurance",
+  fixed: "cat-fixed",
+  vehicle: "cat-vehicle",
+  health: "cat-health",
+  finance: "cat-finance",
   other: "cat-other",
 };
 
@@ -21,12 +26,18 @@ const defaultCategories: Category[] = [
   { id: catIds.fitness, name: "Fitness", icon: "💪", color: "#10B981" },
   { id: catIds.media, name: "Nieuws & Media", icon: "📰", color: "#F59E0B" },
   { id: catIds.cloud, name: "Cloud Storage", icon: "☁️", color: "#8B5CF6" },
+  { id: catIds.insurance, name: "Verzekeringen", icon: "🛡️", color: "#0EA5E9" },
+  { id: catIds.fixed, name: "Vaste lasten", icon: "🏠", color: "#84CC16" },
+  { id: catIds.vehicle, name: "Voertuig", icon: "🚗", color: "#6366F1" },
+  { id: catIds.health, name: "Gezondheid", icon: "🏥", color: "#EC4899" },
+  { id: catIds.finance, name: "Bank & Financiën", icon: "🏦", color: "#14B8A6" },
   { id: catIds.other, name: "Overig", icon: "📦", color: "#6B7280" },
 ];
 
+/** Vaste seed data — geen generateId()/now() om hydration mismatch te voorkomen (server vs client) */
 const defaultSubscriptions: Subscription[] = [
   {
-    id: generateId(),
+    id: "sub-1",
     name: "Netflix",
     price: 15.99,
     currency: "EUR",
@@ -35,11 +46,11 @@ const defaultSubscriptions: Subscription[] = [
     nextBillingDate: "2026-03-14",
     notes: "Standard plan",
     isActive: true,
-    createdAt: now(),
-    updatedAt: now(),
+    createdAt: "2026-02-14T10:00:00.000Z",
+    updatedAt: "2026-02-14T10:00:00.000Z",
   },
   {
-    id: generateId(),
+    id: "sub-2",
     name: "Spotify",
     price: 9.99,
     currency: "EUR",
@@ -48,11 +59,11 @@ const defaultSubscriptions: Subscription[] = [
     nextBillingDate: "2026-03-01",
     notes: "",
     isActive: true,
-    createdAt: now(),
-    updatedAt: now(),
+    createdAt: "2026-02-14T10:00:00.000Z",
+    updatedAt: "2026-02-14T10:00:00.000Z",
   },
   {
-    id: generateId(),
+    id: "sub-3",
     name: "Microsoft 365",
     price: 99,
     currency: "EUR",
@@ -61,8 +72,8 @@ const defaultSubscriptions: Subscription[] = [
     nextBillingDate: "2027-02-14",
     notes: "Family plan",
     isActive: true,
-    createdAt: now(),
-    updatedAt: now(),
+    createdAt: "2026-02-14T10:00:00.000Z",
+    updatedAt: "2026-02-14T10:00:00.000Z",
   },
 ];
 

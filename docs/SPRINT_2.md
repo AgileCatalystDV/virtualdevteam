@@ -21,11 +21,12 @@ Kwaliteitsverbetering van de Subscription Tracker: code review door Maya, adress
 | 3 | Adresseren suggestions | ✅ getActiveSubscriptions, category validatie, getMonthlyEquivalent guard, SubscriptionCard fallback |
 | 4 | Polish | ✅ Toegankelijkheid categorie-select (aria-invalid, aria-describedby) |
 
-### ⏳ Volgende sprint (Sprint 3)
+### ⏳ Volgende sprint (Sprint 3) — Zie [SPRINT_3.md](./SPRINT_3.md)
 | # | Taak | Verantwoordelijke |
 |---|------|-------------------|
-| 6 | Security review (input validatie) | @PenPeter |
-| 7 | Backend API voorbereiding (indien gewenst) | @Floyd |
+| 1 | Security audit | @PenPeter |
+| 2 | API contract documenteren | @Alex |
+| 3 | Adresseren security findings | @Fede |
 
 ---
 

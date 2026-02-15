@@ -86,5 +86,14 @@ virtualdevteam/
 - **Fase 3**: Monetization (budget alerts, premium tier)
 
 ---
+
+## Google Cloud Architectuur
+
+**Zie**: [GCP_ARCHITECTURE.md](./GCP_ARCHITECTURE.md)
+
+**Aanbeveling Alex**: Cloud Run + Cloud SQL (PostgreSQL). Serverless, schaalbaar, cost-effective. Alternatief: Firestore voor nog eenvoudigere ops.
+
+---
 *Architectuur CRUD app toegevoegd door @Alex — 2026-02-14*  
-*Subscription Tracker specs toegevoegd — 2026-02-14*
+*Subscription Tracker specs toegevoegd — 2026-02-14*  
+*GCP architectuur — 2026-02-14*

@@ -2,7 +2,7 @@
 
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { useSubscriptionStore } from "@/lib/store";
+import { useApiData } from "@/components/providers/ApiDataProvider";
 import { SubscriptionForm } from "@/components/subscriptions/SubscriptionForm";
 import { Card } from "@/components/ui/Card";
 
@@ -11,11 +11,16 @@ export default function EditSubscriptionPage() {
   const params = useParams();
   const id = params.id as string;
 
-  const getSubscription = useSubscriptionStore((s) => s.getSubscription);
-  const updateSubscription = useSubscriptionStore((s) => s.updateSubscription);
-  const categories = useSubscriptionStore((s) => s.categories);
-
+  const { getSubscription, updateSubscription, categories, loading } = useApiData();
   const subscription = getSubscription(id);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <p className="text-slate-500">Bezig met laden...</p>
+      </div>
+    );
+  }
 
   if (!subscription) {
     return (
@@ -35,7 +40,7 @@ export default function EditSubscriptionPage() {
     );
   }
 
-  const handleSubmit = (data: {
+  const handleSubmit = async (data: {
     name: string;
     price: number;
     currency: string;
@@ -44,7 +49,7 @@ export default function EditSubscriptionPage() {
     nextBillingDate?: string;
     notes: string;
   }) => {
-    updateSubscription(id, data);
+    await updateSubscription(id, data);
     router.push("/");
   };
 

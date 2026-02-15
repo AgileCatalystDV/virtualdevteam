@@ -24,11 +24,23 @@
 
 ## 🎯 Product Visie
 
-**One-liner**: Overzicht van al je abonnementen — wat betaal je, wanneer, en hoeveel in totaal?
+**One-liner**: Overzicht van al je terugkerende kosten — abonnementen, verzekeringen, vaste lasten. Wat betaal je, wanneer, en hoeveel in totaal?
 
-**Doelgroep**: Consumenten met 3+ abonnementen (streaming, software, fitness, etc.) die overzicht willen.
+**Doelgroep**: Consumenten met 3+ abonnementen of terugkerende kosten (streaming, software, verzekeringen, vaste lasten, etc.) die overzicht willen.
 
-**Waarde**: Inzicht in maandelijkse/jaarlijkse kosten, herinneringen voor vervaldatum, mogelijkheid om ongebruikte abo's te identificeren.
+**Waarde**: Inzicht in maandelijkse/jaarlijkse kosten, herinneringen voor vervaldatum, mogelijkheid om ongebruikte abo's te identificeren. Eén plek voor Netflix, verzekeringen, vaste lasten én nutsvoorzieningen (elektriciteit, gas, water, syndicus) — ook met variabele prijzen (voorschot).
+
+---
+
+## 📱 UI & Responsive (Alex)
+
+| Aspect | Keuze |
+|--------|-------|
+| **Aanpak** | Mobile-first (Tailwind: base = mobiel, sm:/lg: = grotere schermen) |
+| **Min. viewport** | 360px — ondersteunt apparaten vanaf ~2020 (iPhone SE 2e gen, Galaxy S20, Pixel 5) |
+| **Niet ondersteund** | 320px en smaller (legacy: iPhone 5, SE 1e gen) |
+
+*Layout, grids en formulieren moeten bruikbaar zijn vanaf 360px. @Fede houdt hier rekening mee bij componenten.*
 
 ---
 
@@ -40,15 +52,22 @@
 |------|------|-----------|--------------|
 | id | UUID | ✓ | Primary key |
 | name | string | ✓ | Naam abonnement (bijv. "Netflix") |
-| price | decimal | ✓ | Prijs per cyclus |
+| price | decimal | ✓ | Prijs per cyclus (bij fixed) of maandelijks voorschot (bij variable) |
+| price_type | enum | ✓ | `fixed` \| `variable` — default: `fixed` |
 | currency | string | ✓ | ISO 4217 (EUR, USD) — default: EUR |
 | billing_cycle | enum | ✓ | `monthly`, `quarterly`, `yearly` |
 | category_id | UUID | ✓ | FK naar categories |
 | next_billing_date | date | | Volgende factuurdatum |
+| last_settlement_amount | decimal | | (variable) Bedrag laatste jaarafrekening — referentie |
+| last_settlement_date | date | | (variable) Datum laatste jaarafrekening |
 | notes | text | | Vrije notities |
 | is_active | boolean | ✓ | Default: true |
 | created_at | timestamp | ✓ | |
 | updated_at | timestamp | ✓ | |
+
+**price_type**:
+- **fixed**: Vast bedrag per cyclus (Netflix, Spotify, verzekering).
+- **variable**: Variabele kosten met maandelijks voorschot (elektriciteit, gas, water, syndicus). `price` = voorschot; dashboard gebruikt dit voor totalen.
 
 ### Tabel: `categories`
 
@@ -65,6 +84,11 @@
 - Fitness (💪)
 - Nieuws & Media (📰)
 - Cloud Storage (☁️)
+- **Verzekeringen** (🛡️) — Auto, huis, familiale, hospitalisatie
+- **Vaste lasten** (🏠) — Huur, hypotheek, nutsvoorzieningen (elektriciteit, gas, water, syndicus — vaak variable/voorschot)
+- **Voertuig** (🚗) — Verzekering, belasting, onderhoud
+- **Gezondheid** (🏥) — Zorgverzekering, mutualiteit
+- **Bank & Financiën** (🏦) — Bankkosten, kredietkaart
 - Overig (📦)
 
 ---
@@ -81,6 +105,16 @@
 | 4 | **Billing cycle** | Maandelijks, per kwartaal, jaarlijks — automatische omrekening naar maandelijks equivalent | P0 |
 | 5 | **Valuta** | EUR default; veld voor toekomstige multi-currency | P1 |
 
+### Fase 1.5 — Variabele prijzen (na MVP)
+
+| # | Feature | Beschrijving |
+|---|---------|--------------|
+| 5a | **price_type** | `fixed` \| `variable` — ondersteuning voor nutsvoorzieningen, syndicus |
+| 5b | **Voorschot** | Bij variable: `price` = maandelijks voorschot; label in UI "Maandelijks voorschot" |
+| 5c | **Laatste jaarafrekening** | Optioneel: `last_settlement_amount`, `last_settlement_date` — referentie alleen |
+
+*Scope: geen meterstanden, verbruiksgrafieken of voorspellingen — zie Premium.*
+
 ### Fase 2 (Post-MVP)
 
 | # | Feature | Beschrijving |
@@ -90,12 +124,16 @@
 | 8 | **Herinneringen** | Notificatie bij aanstaande vervaldatum |
 | 9 | **Export** | CSV/PDF export van abonnementen |
 
-### Fase 3 (Monetization)
+### Fase 3 (Monetization) — Premium tier
 
 | # | Feature | Beschrijving |
 |---|---------|--------------|
 | 10 | **Budget alerts** | Waarschuwing bij overschrijding maandelijks budget |
-| 11 | **Premium** | Betaalde tier voor advanced features |
+| 11 | **Premium — basis** | Betaalde tier voor export, geavanceerde herinneringen |
+| 12 | **Premium — variabele kosten** | Meterstanden invoer & historiek |
+| 13 | **Premium — inzicht** | Verbruiksgrafieken, voorspellingen, vergelijking vorig jaar |
+
+*Gratis: vaste + variabele (voorschot) in dashboard. Premium: + meterstanden, grafieken, voorspellingen.*
 
 ---
 
@@ -153,6 +191,7 @@ subscription-tracker/          # Nieuwe app of uitbreiding crud-app
 | 1 | Data model, types, store, basis CRUD | @Alex (spec) → @Fede |
 | 2 | Dashboard, categorieën, billing logic | @Fede |
 | 3 | Polish, edge cases, @Maya review | @Fede, @Maya |
+| 3.5 | Fase 1.5: price_type, variabele prijzen (voorschot, jaarafrekening) | @Fede |
 | 4+ | Backend, auth (indien gewenst) | @Floyd, @Ian |
 
 ---

@@ -2,15 +2,23 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useSubscriptionStore } from "@/lib/store";
+import { useApiData } from "@/components/providers/ApiDataProvider";
 import { SubscriptionForm } from "@/components/subscriptions/SubscriptionForm";
 import { Card } from "@/components/ui/Card";
 
 export default function NewSubscriptionPage() {
   const router = useRouter();
-  const { addSubscription, categories } = useSubscriptionStore();
+  const { addSubscription, categories, loading } = useApiData();
 
-  const handleSubmit = (data: {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <p className="text-slate-500">Bezig met laden...</p>
+      </div>
+    );
+  }
+
+  const handleSubmit = async (data: {
     name: string;
     price: number;
     currency: string;
@@ -19,7 +27,7 @@ export default function NewSubscriptionPage() {
     nextBillingDate?: string;
     notes: string;
   }) => {
-    addSubscription({
+    await addSubscription({
       ...data,
       isActive: true,
     });

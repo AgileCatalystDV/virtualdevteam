@@ -39,3 +39,7 @@ Skills zijn beschikbaar in `.cursor/skills/`:
 
 ## Actieve Product Specs
 - **[Subscription Tracker](SUBSCRIPTION_TRACKER_SPECS.md)** — Goedgekeurd. CRUD-app voor abonnementen met beperkte DB, marktvraag en monetization-potentieel.
+
+## Sprints
+- **[Sprint 4](SPRINT_4.md)** — ✅ Afgerond. Mock API, GCP architectuur (Cloud Run + Cloud SQL).
+- **[Sprint 5](SPRINT_5.md)** — Gepland. GCP integratie: Cloud SQL, Cloud Run, Firebase Auth.
