@@ -1,0 +1,23 @@
+# Dev setup — lokale PostgreSQL voor Subscription Tracker
+# @Ian — Dev setup
+#
+# Gebruik: docker compose up -d
+# Schema wordt automatisch toegepast bij eerste start (lege volume).
+# API: DATABASE_URL="postgresql://postgres:postgres@localhost:5432/subscription_tracker" npm run dev
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: subscription_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Init: schema draait automatisch bij eerste start (lege volume)
+      - ./migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+
+volumes:
+  postgres_data:

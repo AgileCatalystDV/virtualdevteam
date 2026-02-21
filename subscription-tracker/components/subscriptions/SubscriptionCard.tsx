@@ -1,10 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import type { Subscription, Category } from "@/lib/types";
 import { formatPrice, getMonthlyEquivalent } from "@/lib/utils";
+import { getServiceLogoUrl } from "@/lib/service-logos";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+
+const LOGO_SIZE = 40;
 
 interface SubscriptionCardProps {
   subscription: Subscription;
@@ -17,6 +21,10 @@ export function SubscriptionCard({
   category,
   onDelete,
 }: SubscriptionCardProps) {
+  const logoUrl = getServiceLogoUrl(subscription.name);
+  const [logoError, setLogoError] = useState(false);
+  const showServiceLogo = logoUrl && !logoError;
+
   const monthlyEquivalent = getMonthlyEquivalent(
     subscription.price,
     subscription.billingCycle
@@ -42,13 +50,29 @@ export function SubscriptionCard({
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <span
-                className="text-lg"
-                title={category?.name ?? "Onbekende categorie"}
-                style={{ color: category?.color ?? "#6B7280" }}
-              >
-                {category?.icon ?? "📦"}
-              </span>
+              {showServiceLogo ? (
+                <div
+                  className="flex shrink-0 rounded-lg overflow-hidden bg-slate-100 flex items-center justify-center"
+                  style={{ width: LOGO_SIZE, height: LOGO_SIZE }}
+                >
+                  <img
+                    src={logoUrl}
+                    alt=""
+                    width={LOGO_SIZE}
+                    height={LOGO_SIZE}
+                    className="object-contain"
+                    onError={() => setLogoError(true)}
+                  />
+                </div>
+              ) : (
+                <span
+                  className="text-lg shrink-0"
+                  title={category?.name ?? "Onbekende categorie"}
+                  style={{ color: category?.color ?? "#6B7280" }}
+                >
+                  {category?.icon ?? "📦"}
+                </span>
+              )}
               <h3 className="text-lg font-semibold text-slate-900 truncate">
                 {subscription.name}
               </h3>

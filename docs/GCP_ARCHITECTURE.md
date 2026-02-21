@@ -94,6 +94,8 @@ Welke GCP-architectuur past het best bij de Subscription Tracker, gegeven dat er
 
 ## 📋 Implementatiestappen (Optie A)
 
+**Handmatige setup**: Zie [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) — copy-paste guide voor self-setup.
+
 1. **Cloud SQL** — Maak PostgreSQL instance (db-f1-micro of db-g1-small)
 2. **Schema** — Run migrations (subscriptions, categories tabellen)
 3. **API container** — Dockerfile voor Express/FastAPI, connect naar Cloud SQL
@@ -123,6 +125,14 @@ Bij hoger gebruik: schaal lineair. Cloud Run + Cloud SQL zijn cost-effective.
 3. **Regio?** — `europe-west1` (België) voor GDPR/data residency.
 
 ---
+
+---
+
+## 🔐 Security — PenPeter Review
+
+**Database architectuur**: [SECURITY_REVIEW_GCP_DATABASE.md](./SECURITY_REVIEW_GCP_DATABASE.md)
+
+PenPeter akkoord met Alex' aanbeveling. Aandacht: SSL config, dedicated DB user, CORS beperken.
 
 ---
 
