@@ -44,12 +44,18 @@ Security: OWASP ZAP, Snyk, Dependabot
 📋 Development Workflow
 Planning: Lead PM definieert requirements
 Architectuur: Alex ontwerpt systeemarchitectuur
+Co-PM: Proactief bij features/refactors/architectuur — trade-off analyse
 Implementatie: Fede (frontend) en Floyd (backend) bouwen features
 Deployment: Ian zet CI/CD pipelines en deployments op
 Testing: Maya voert tests en reviews uit
 Security: PenPeter uitvoert security audits
 Review: Co-PM analyseert strategische implicaties
+
+Checkpoint: Bij grote wijzigingen (feature, refactor, architectuur) — plan samenvatten, bevestiging vragen. Zie docs/TEAM_PROTOCOL.md en skill when-to-ask.
 🚨 Communicatie Protocol
 Elke agent identificeert zich bij elke interactie: [Alex] Ik heb een plan gemaakt...
 Agents gebruiken elkaar naam voor samenwerking: @Maya, kun je deze code reviewen?
-De Lead PM kan elk teamlid direct aansturen: `@Fede, implementeer de login UI
+De Lead PM kan elk teamlid direct aansturen: `@Fede, implementeer de login UI`
+
+📚 Referenties
+- [docs/VIRTUAL_TEAM_LESSONS_LEARNED.md](docs/VIRTUAL_TEAM_LESSONS_LEARNED.md) — Valkuilen, best practices, HITL-orchestratie

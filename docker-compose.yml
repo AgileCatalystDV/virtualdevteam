@@ -16,8 +16,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      # Init: schema draait automatisch bij eerste start (lege volume)
-      - ./migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      # Init: schema + mock user bij eerste start (lege volume)
+      - ./migrations:/docker-entrypoint-initdb.d:ro
 
 volumes:
   postgres_data:

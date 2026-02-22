@@ -3,13 +3,26 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signInWithGoogle, getFirebaseAuth } from "@/lib/firebase";
+import {
+  signInWithGoogle,
+  signInWithMock,
+  getFirebaseAuth,
+  isAuthMockMode,
+} from "@/lib/firebase";
 
 export default function LoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const hasFirebase = !!getFirebaseAuth();
+  const isMockMode = isAuthMockMode();
+
+  const handleMockSignIn = () => {
+    const token = signInWithMock();
+    sessionStorage.setItem("auth_token", token);
+    router.push("/");
+    router.refresh();
+  };
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -17,7 +30,6 @@ export default function LoginPage() {
     try {
       const token = await signInWithGoogle();
       if (token) {
-        // TODO: Store token (cookie via backend of memory), redirect
         sessionStorage.setItem("auth_token", token);
         router.push("/");
         router.refresh();
@@ -41,7 +53,16 @@ export default function LoginPage() {
           Log in om je abonnementen te beheren
         </p>
 
-        <div className="mt-6">
+        <div className="mt-6 space-y-3">
+          {isMockMode && (
+            <button
+              onClick={handleMockSignIn}
+              className="w-full flex items-center justify-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800 hover:bg-amber-100"
+            >
+              🔧 Dev login (mock)
+            </button>
+          )}
+
           {hasFirebase ? (
             <button
               onClick={handleGoogleSignIn}
@@ -63,9 +84,11 @@ export default function LoginPage() {
               )}
             </button>
           ) : (
-            <p className="text-sm text-slate-500 text-center">
-              Firebase Auth niet geconfigureerd. Zie .env.example en FIREBASE_SECURE_SETUP.md.
-            </p>
+            !isMockMode && (
+              <p className="text-sm text-slate-500 text-center">
+                Firebase Auth niet geconfigureerd. Zie .env.example en FIREBASE_SECURE_SETUP.md.
+              </p>
+            )
           )}
 
           {error && (

@@ -40,6 +40,30 @@ Lokaal ontwikkelen zonder GCP. Zelfde migrations en API code als productie. Alle
 - API: `curl http://localhost:8080/v1/categories`
 - Frontend: http://localhost:3000
 
+## Docker Best Practices (2025)
+
+### Healthcheck + depends_on
+`depends_on` wacht alleen op container start, niet op service readiness. Gebruik `condition: service_healthy` voor databases:
+
+```yaml
+services:
+  db:
+    image: postgres:16-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  app:
+    depends_on:
+      db:
+        condition: service_healthy
+```
+
+**Condition types**: `service_started` (default), `service_healthy`, `service_completed_successfully` (migrations).
+
 ## References
 
 - [docs/DEV_SETUP.md](../../docs/DEV_SETUP.md)

@@ -2,8 +2,8 @@
  * Subscriptions API — CRUD /v1/subscriptions
  * @Floyd — Sprint 5
  *
- * Auth: Authorization Bearer <token> — verify via Firebase Admin SDK (Fase 2)
- * Nu: user_id = null (geen auth)
+ * Auth: req.userId van authMiddleware (mock of Firebase)
+ * user_id = null → anonieme data; user_id = UUID → user-scoped
  */
 
 import { Router } from "express";
@@ -30,10 +30,15 @@ function rowToSubscription(row) {
 // GET /v1/subscriptions
 subscriptionsRouter.get("/", async (req, res) => {
   try {
-    const result = await query(
-      "SELECT * FROM subscriptions WHERE (user_id IS NULL OR user_id = $1) AND is_active = true ORDER BY created_at DESC",
-      [null] // TODO: decoded.uid when auth
-    );
+    const userId = req.userId;
+    const result = userId
+      ? await query(
+          "SELECT * FROM subscriptions WHERE user_id = $1 AND is_active = true ORDER BY created_at DESC",
+          [userId]
+        )
+      : await query(
+          "SELECT * FROM subscriptions WHERE user_id IS NULL AND is_active = true ORDER BY created_at DESC"
+        );
     res.json(result.rows.map(rowToSubscription));
   } catch (err) {
     console.error("Subscriptions GET error:", err);
@@ -44,10 +49,16 @@ subscriptionsRouter.get("/", async (req, res) => {
 // GET /v1/subscriptions/:id
 subscriptionsRouter.get("/:id", async (req, res) => {
   try {
-    const result = await query(
-      "SELECT * FROM subscriptions WHERE id = $1 AND (user_id IS NULL OR user_id = $2)",
-      [req.params.id, null]
-    );
+    const userId = req.userId;
+    const result = userId
+      ? await query(
+          "SELECT * FROM subscriptions WHERE id = $1 AND user_id = $2",
+          [req.params.id, userId]
+        )
+      : await query(
+          "SELECT * FROM subscriptions WHERE id = $1 AND user_id IS NULL",
+          [req.params.id]
+        );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Not found" });
     }
@@ -65,11 +76,12 @@ subscriptionsRouter.post("/", async (req, res) => {
     if (!name || price == null) {
       return res.status(400).json({ error: "name and price required" });
     }
+    const userId = req.userId;
     const result = await query(
       `INSERT INTO subscriptions (user_id, name, price, currency, billing_cycle, category_id, next_billing_date, notes, is_active, created_at, updated_at)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, true, NOW(), NOW())
        RETURNING *`,
-      [null, name, price ?? 0, currency ?? "EUR", billingCycle ?? "monthly", categoryId ?? "cat-other", nextBillingDate || null, notes ?? ""]
+      [userId, name, price ?? 0, currency ?? "EUR", billingCycle ?? "monthly", categoryId ?? "cat-other", nextBillingDate || null, notes ?? ""]
     );
     res.status(201).json(rowToSubscription(result.rows[0]));
   } catch (err) {
@@ -82,21 +94,38 @@ subscriptionsRouter.post("/", async (req, res) => {
 subscriptionsRouter.put("/:id", async (req, res) => {
   try {
     const { name, price, currency, billingCycle, categoryId, nextBillingDate, notes, isActive } = req.body;
-    const result = await query(
-      `UPDATE subscriptions SET
-        name = COALESCE($2, name),
-        price = COALESCE($3, price),
-        currency = COALESCE($4, currency),
-        billing_cycle = COALESCE($5, billing_cycle),
-        category_id = COALESCE($6, category_id),
-        next_billing_date = $7,
-        notes = COALESCE($8, notes),
-        is_active = COALESCE($9, is_active),
-        updated_at = NOW()
-       WHERE id = $1 AND (user_id IS NULL OR user_id = $10)
-       RETURNING *`,
-      [req.params.id, name, price, currency, billingCycle, categoryId, nextBillingDate || null, notes, isActive, null]
-    );
+    const userId = req.userId;
+    const result = userId
+      ? await query(
+          `UPDATE subscriptions SET
+            name = COALESCE($2, name),
+            price = COALESCE($3, price),
+            currency = COALESCE($4, currency),
+            billing_cycle = COALESCE($5, billing_cycle),
+            category_id = COALESCE($6, category_id),
+            next_billing_date = $7,
+            notes = COALESCE($8, notes),
+            is_active = COALESCE($9, is_active),
+            updated_at = NOW()
+           WHERE id = $1 AND user_id = $10
+           RETURNING *`,
+          [req.params.id, name, price, currency, billingCycle, categoryId, nextBillingDate || null, notes, isActive, userId]
+        )
+      : await query(
+          `UPDATE subscriptions SET
+            name = COALESCE($2, name),
+            price = COALESCE($3, price),
+            currency = COALESCE($4, currency),
+            billing_cycle = COALESCE($5, billing_cycle),
+            category_id = COALESCE($6, category_id),
+            next_billing_date = $7,
+            notes = COALESCE($8, notes),
+            is_active = COALESCE($9, is_active),
+            updated_at = NOW()
+           WHERE id = $1 AND user_id IS NULL
+           RETURNING *`,
+          [req.params.id, name, price, currency, billingCycle, categoryId, nextBillingDate || null, notes, isActive]
+        );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Not found" });
     }
@@ -110,10 +139,16 @@ subscriptionsRouter.put("/:id", async (req, res) => {
 // DELETE /v1/subscriptions/:id
 subscriptionsRouter.delete("/:id", async (req, res) => {
   try {
-    const result = await query(
-      "DELETE FROM subscriptions WHERE id = $1 AND (user_id IS NULL OR user_id = $2) RETURNING id",
-      [req.params.id, null]
-    );
+    const userId = req.userId;
+    const result = userId
+      ? await query(
+          "DELETE FROM subscriptions WHERE id = $1 AND user_id = $2 RETURNING id",
+          [req.params.id, userId]
+        )
+      : await query(
+          "DELETE FROM subscriptions WHERE id = $1 AND user_id IS NULL RETURNING id",
+          [req.params.id]
+        );
     if (result.rows.length === 0) {
       return res.status(404).json({ error: "Not found" });
     }

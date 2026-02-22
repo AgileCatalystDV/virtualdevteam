@@ -23,6 +23,19 @@ description: 'Complete security audit met OWASP Top 10, vulnerability scanning e
 4. **Configuration Review**: Environment variables, secrets management
 5. **Compliance Check**: GDPR, SOC 2, etc.
 
+## OWASP Secure Headers (2025)
+
+### Content-Security-Policy (CSP)
+CSP beperkt resource loading en beschermt tegen XSS, clickjacking. **Vermijd wildcards** (`*`). Aanbevolen:
+
+- `script-src 'nonce-r4nd0m' 'strict-dynamic'; object-src 'none'; base-uri 'none';`
+- Valideer met Google CSP Evaluator
+
+### Essentiële headers
+- `X-Frame-Options: DENY`
+- `X-Content-Type-Options: nosniff`
+- `Referrer-Policy: strict-origin-when-cross-origin`
+
 ## Output Format
 ```markdown
 # Security Audit Report - [DATE]

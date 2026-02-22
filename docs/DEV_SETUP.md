@@ -39,8 +39,8 @@ Bij **eerste keer** of **verse volume** (`docker compose down -v` gevolgd door `
 Handmatig nodig als je een bestaande container had vóór deze setup:
 
 ```bash
-# Zonder psql op je Mac
 docker compose exec -i db psql -U postgres -d subscription_tracker < migrations/001_initial_schema.sql
+docker compose exec -i db psql -U postgres -d subscription_tracker < migrations/002_mock_user.sql
 ```
 
 ### 3. API starten
@@ -48,6 +48,7 @@ docker compose exec -i db psql -U postgres -d subscription_tracker < migrations/
 ```bash
 cd api-backend
 export DATABASE_URL="postgresql://postgres:postgres@localhost:5432/subscription_tracker"
+export AUTH_MODE=mock   # Optioneel: voor Dev login flow
 npm install
 npm run dev
 ```
@@ -59,10 +60,18 @@ API op http://localhost:8080
 ```bash
 cd subscription-tracker
 export NEXT_PUBLIC_API_URL="http://localhost:8080/v1"
+export NEXT_PUBLIC_AUTH_MODE=mock   # Optioneel: toont "Dev login" knop
 npm run dev
 ```
 
 Frontend op http://localhost:3000
+
+### 5. Mock login (optioneel)
+
+Met `AUTH_MODE=mock` (api-backend) en `NEXT_PUBLIC_AUTH_MODE=mock` (frontend):
+- Login pagina toont **"Dev login (mock)"** knop
+- Klik → ingelogd als dev user, data per user
+- Geen Firebase nodig voor lokale dev
 
 ### Stoppen
 
@@ -112,6 +121,7 @@ createdb subscription_tracker
 
 # Migratie
 psql -d subscription_tracker -f migrations/001_initial_schema.sql
+psql -d subscription_tracker -f migrations/002_mock_user.sql
 
 # Validatie
 psql -d subscription_tracker -c "SELECT COUNT(*) FROM categories;"
@@ -121,6 +131,7 @@ psql -d subscription_tracker -c "SELECT COUNT(*) FROM categories;"
 ```bash
 export DATABASE_URL="postgresql://postgres:JOUW_WACHTWOORD@localhost:5432/subscription_tracker"
 psql "$DATABASE_URL" -f migrations/001_initial_schema.sql
+psql "$DATABASE_URL" -f migrations/002_mock_user.sql
 ```
 
 ### 3. API + Frontend
@@ -131,10 +142,12 @@ Zelfde als Optie A, stap 3–4. Pas `DATABASE_URL` aan naar jouw localhost setup
 
 ## Environment variables (dev)
 
-| Var | Docker | Localhost |
-|-----|--------|-----------|
-| **DATABASE_URL** (API) | `postgresql://postgres:postgres@localhost:5432/subscription_tracker` | `postgresql://user:pass@localhost:5432/subscription_tracker` |
-| **NEXT_PUBLIC_API_URL** (Frontend) | `http://localhost:8080/v1` | `http://localhost:8080/v1` |
+| Var | Waarde | Beschrijving |
+|-----|--------|--------------|
+| **DATABASE_URL** (API) | `postgresql://postgres:postgres@localhost:5432/subscription_tracker` | Postgres connection string |
+| **NEXT_PUBLIC_API_URL** (Frontend) | `http://localhost:8080/v1` | API base URL |
+| **AUTH_MODE** (API) | `mock` | Optioneel — Dev login zonder Firebase |
+| **NEXT_PUBLIC_AUTH_MODE** (Frontend) | `mock` | Optioneel — toont "Dev login (mock)" knop |
 
 **Tip**: Maak `.env.local` in subscription-tracker en `api-backend/.env` (niet committen).
 
@@ -166,8 +179,11 @@ Dezelfde migrations en API code werken in beide omgevingen. Alleen `DATABASE_URL
 ## Referenties
 
 - [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) — Productie setup
+- [MOCK_LOGIN.md](./MOCK_LOGIN.md) — Mock login flow (lokaal zonder Firebase)
 - [migrations/001_initial_schema.sql](../migrations/001_initial_schema.sql)
+- [migrations/002_mock_user.sql](../migrations/002_mock_user.sql)
 
 ---
 
-*Ian — DevSecOps — Dev Setup*
+*Ian — DevSecOps — Dev Setup*  
+*Mock login doc — Floyd, Fede — 2026-02-22*

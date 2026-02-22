@@ -5,6 +5,29 @@ Dit document bevat de uitgebreide protocollen voor het virtuele AI development t
 ## Overzicht
 Zie [AGENTS.md](../AGENTS.md) in de project root voor het team handboek en basis protocol.
 
+## Workflow: Checkpoint & When to Ask
+
+### Grote wijzigingen — checkpoint vóór start
+
+Bij **nieuwe features**, **refactoring** of **architectuurwijzigingen**: geef eerst een korte samenvatting en vraag bevestiging.
+
+| Type | Actie |
+|------|-------|
+| Nieuwe feature | Plan samenvatten → "Zal ik zo starten?" |
+| Refactoring | Scope + impact → bevestiging |
+| Architectuur | Alex/Co-PM betrekken → daarna implementeren |
+
+### When to Ask (skill)
+
+- **Vragen:** security, breaking changes, nieuwe dependencies, API-contract wijzigingen
+- **Doorpakken:** bugfixes, kleine UI, documentatie, tests
+
+Zie [.cursor/skills/when-to-ask/](../.cursor/skills/when-to-ask/).
+
+### Retro-notes
+
+Na grote sessies: draft toevoegen aan [VIRTUAL_TEAM_LESSONS_LEARNED.md](VIRTUAL_TEAM_LESSONS_LEARNED.md). **Expliciet openen** voor discussie — agent stelt voor, Lead PM kan feedback geven of ter discussie stellen.
+
 ## Communicatie Protocollen
 - Elke agent identificeert zich bij elke interactie: `[Alex] Ik heb een plan gemaakt...`
 - Agents gebruiken elkaars naam voor samenwerking: `@Maya, kun je deze code reviewen?`
@@ -13,11 +36,12 @@ Zie [AGENTS.md](../AGENTS.md) in de project root voor het team handboek en basis
 ## Development Workflow
 1. **Planning**: Lead PM definieert requirements
 2. **Architectuur**: Alex ontwerpt systeemarchitectuur
-3. **Implementatie**: Fede (frontend) en Floyd (backend) bouwen features
-4. **Deployment**: Ian zet CI/CD pipelines en deployments op
-5. **Testing**: Maya voert tests en reviews uit
-6. **Security**: PenPeter uitvoert security audits
-7. **Review**: Co-PM analyseert strategische implicaties
+3. **Co-PM** (proactief): Trade-off analyse bij features, refactors, architectuur — Lead PM kan @co-pm noemen, agent kan Co-PM ook zelf voorstellen
+4. **Implementatie**: Fede (frontend) en Floyd (backend) bouwen features
+5. **Deployment**: Ian zet CI/CD pipelines en deployments op
+6. **Testing**: Maya voert tests en reviews uit
+7. **Security**: PenPeter uitvoert security audits
+8. **Review**: Co-PM analyseert strategische implicaties
 
 ## Agent Persona Regels
 Persona regels zijn geconfigureerd in `.cursor/rules/`:
@@ -36,6 +60,7 @@ Skills zijn beschikbaar in `.cursor/skills/`:
 - `deployment-pipeline/` - CI/CD pipeline setup
 - `code-review/` - Gestructureerde code review
 - `threat-modeling/` - STRIDE threat modeling
+- `when-to-ask/` - Wanneer vragen vs. doorpakken
 
 ## Actieve Product Specs
 - **[Subscription Tracker](SUBSCRIPTION_TRACKER_SPECS.md)** — Goedgekeurd. CRUD-app voor abonnementen met beperkte DB, marktvraag en monetization-potentieel.
