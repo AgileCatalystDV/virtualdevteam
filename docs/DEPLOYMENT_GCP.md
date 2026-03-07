@@ -4,6 +4,8 @@
 **Datum**: 2026-02-14  
 **Context**: Volledige deployment-strategie voor GCP-infrastructuur
 
+**Beslissing (2026-02-28)**: Optie A — GCP all the way. Geen Vercel. Zie [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md).
+
 ---
 
 ## Projectoverzicht
@@ -71,7 +73,7 @@ flowchart TB
 
 | Item | Status | Actie |
 |------|--------|-------|
-| Frontend Dockerfile | Ontbreekt | Maak Dockerfile voor Next.js (standalone output) |
+| Frontend Dockerfile | ✅ | subscription-tracker/Dockerfile + next.config standalone |
 | GitHub Actions CI/CD | Ontbreekt | Workflow: build → push Artifact Registry → deploy Cloud Run |
 | Cloud Build | Ontbreekt | cloudbuild.yaml voor gcloud builds submit |
 | Secret Manager setup | Handmatig | db-url secret aanmaken |

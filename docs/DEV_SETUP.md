@@ -159,10 +159,20 @@ Zelfde als Optie A, stap 3–4. Pas `DATABASE_URL` aan naar jouw localhost setup
 [Dev]                          [Productie]
 Docker Postgres / localhost  →  Cloud SQL
 API (npm run dev)            →  Cloud Run
-Frontend (npm run dev)       →  Vercel / Cloud Run
+Frontend (npm run dev)       →  Cloud Run
 ```
 
 Dezelfde migrations en API code werken in beide omgevingen. Alleen `DATABASE_URL` wijzigt.
+
+---
+
+## GCP deploy (handmatig)
+
+Voor productie-deploy naar Google Cloud:
+
+1. **Stappenplan**: [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md) — volgorde en checklist
+2. **Volledige instructies**: [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — gcloud commands, env vars, CI/CD voorstel
+3. **Pre-deploy checklist**: Zie GCP_DEPLOYMENT_STEPS.md
 
 ---
 
@@ -178,7 +188,9 @@ Dezelfde migrations en API code werken in beide omgevingen. Alleen `DATABASE_URL
 
 ## Referenties
 
-- [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) — Productie setup
+- [LEAD_PM_GCP_STAPPENPLAN.md](./LEAD_PM_GCP_STAPPENPLAN.md) — **Start hier** — Simpel stappenplan voor GCP (Lead PM)
+- [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md) — GCP all the way stappenplan
+- [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — Productie setup (gcloud commands)
 - [MOCK_LOGIN.md](./MOCK_LOGIN.md) — Mock login flow (lokaal zonder Firebase)
 - [migrations/001_initial_schema.sql](../migrations/001_initial_schema.sql)
 - [migrations/002_mock_user.sql](../migrations/002_mock_user.sql)

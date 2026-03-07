@@ -41,6 +41,12 @@ Implementatie van de GCP-architectuur zoals gedocumenteerd. Naadloze overgang va
 - **ApiDataProvider** — Frontend gebruikt API client i.p.v. Zustand
 - **.env.example** — Template voor API_URL en Firebase config
 
+**Recent (2026-02-28)**:
+- GCP all the way beslissing — Optie A (Cloud Run voor frontend + API)
+- GCP_DEPLOYMENT_STEPS.md — architectuurbeslissing, volgorde, pre-deploy checklist
+- LEAD_PM_GCP_STAPPENPLAN.md — simpel stappenplan voor Lead PM (geen GCP-ervaring)
+- Frontend Dockerfile + next.config standalone — klaar voor Cloud Run deploy
+
 **Nog handmatig**: Cloud SQL instance aanmaken, schema runnen, Cloud Run deploy, Firebase project configureren.
 
 ---

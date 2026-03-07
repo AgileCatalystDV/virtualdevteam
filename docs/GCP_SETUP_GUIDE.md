@@ -136,13 +136,19 @@ curl https://JOUW_API_URL/v1/categories
 
 ## Stap 5: Frontend configureren
 
-**Vercel** (aanbevolen voor Next.js):
+**Cloud Run** (GCP all the way — aanbevolen):
+```bash
+cd subscription-tracker
+gcloud run deploy subscription-tracker-web \
+  --source . \
+  --region europe-west1 \
+  --set-env-vars NEXT_PUBLIC_API_URL=https://JOUW_API_URL/v1
+```
+Vereist Dockerfile + `output: 'standalone'` in next.config (aanwezig).
+
+**Vercel** (alternatief):
 1. `vercel --prod` in `subscription-tracker/`
 2. Environment variable: `NEXT_PUBLIC_API_URL` = `https://JOUW_API_URL/v1`
-
-**Cloud Run** (alles in GCP):
-- Vereist Dockerfile + `output: 'standalone'` in next.config
-- Zie [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) Fase 4
 
 ---
 
@@ -154,7 +160,7 @@ curl https://JOUW_API_URL/v1/categories
 | "Permission denied" op secret | IAM: Cloud Run SA → Secret Manager Secret Accessor |
 | "Connection refused" bij deploy | Check `--add-cloudsql-instances` (exact format: `PROJECT:REGION:INSTANCE`) |
 | Migratie: "connection refused" | Cloud SQL Proxy moet draaien op localhost:5432 |
-| CORS errors in browser | Backend: beperk `cors({ origin: ['https://jouw-frontend.vercel.app'] })` |
+| CORS errors in browser | Backend: beperk `cors({ origin: ['https://subscription-tracker-web-xxx.run.app'] })` (jouw frontend Cloud Run URL) |
 
 ---
 
