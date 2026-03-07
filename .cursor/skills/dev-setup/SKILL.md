@@ -31,8 +31,13 @@ Lokaal ontwikkelen zonder GCP. Zelfde migrations en API code als productie. Alle
 |-----|--------|-----------|
 | DATABASE_URL (API) | `postgresql://postgres:postgres@localhost:5432/subscription_tracker` | `postgresql://user:pass@localhost:5432/subscription_tracker` |
 | NEXT_PUBLIC_API_URL (Frontend) | `http://localhost:8080/v1` | `http://localhost:8080/v1` |
+| AUTH_MODE (API) | `mock` — Dev login zonder Firebase | idem |
+| NEXT_PUBLIC_AUTH_MODE (Frontend) | `mock` — toont "Dev login (mock)" knop | idem |
 
 **Tip**: `.env.local` / `api-backend/.env` — niet committen.
+
+### Mock auth (lokaal)
+Met `AUTH_MODE=mock` + `NEXT_PUBLIC_AUTH_MODE=mock`: login pagina toont "Dev login (mock)" — geen Firebase nodig. Zie [MOCK_LOGIN.md](../../docs/MOCK_LOGIN.md).
 
 ## Validatie
 

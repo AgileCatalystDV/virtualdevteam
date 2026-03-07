@@ -33,6 +33,12 @@ Beoordeel de code op de volgende punten:
 - Worden errors correct opgegooid en afgehandeld?
 - Staan er geen `console.log` statements in de productiecode?
 
+#### E. Project-specifiek (Next.js + Express)
+- **Next.js**: `NEXT_PUBLIC_*` alleen voor build-time vars; geen secrets
+- **Express**: Parameterized queries (pg) — geen string concatenatie in SQL
+- **API**: Auth middleware op user-scoped routes (`/v1/subscriptions`)
+- **CORS**: In productie beperken tot frontend origin
+
 ### 3. Output Formaat
 Geef altijd feedback in de vorm van **Commentaren** met severity:
 

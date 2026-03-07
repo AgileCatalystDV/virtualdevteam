@@ -30,6 +30,15 @@ Subscription Tracker uses Cloud Run (API), Cloud SQL (PostgreSQL), Secret Manage
    - Cloud Run: `postgresql://user:pass@/dbname?host=/cloudsql/PROJECT:REGION:INSTANCE`
    - Lokaal (proxy): `postgresql://user:pass@localhost:5432/dbname`
 
+5. **Frontend (Next.js)**
+   - Dockerfile + `output: 'standalone'` in next.config
+   - `gcloud run deploy subscription-tracker-web --source .`
+   - Build-time: `NEXT_PUBLIC_API_URL` (API URL + `/v1`)
+
+6. **Artifact Registry**
+   - APIs: `artifactregistry.googleapis.com`
+   - `--source .` gebruikt Cloud Build → push naar Artifact Registry automatisch
+
 ## Troubleshooting
 
 | Probleem | Oplossing |
@@ -42,5 +51,7 @@ Subscription Tracker uses Cloud Run (API), Cloud SQL (PostgreSQL), Secret Manage
 
 ## References
 
+- [docs/LEAD_PM_GCP_STAPPENPLAN.md](../../docs/LEAD_PM_GCP_STAPPENPLAN.md) — Start voor Lead PM (geen ervaring)
 - [docs/GCP_SETUP_GUIDE.md](../../docs/GCP_SETUP_GUIDE.md)
+- [docs/GCP_DEPLOYMENT_STEPS.md](../../docs/GCP_DEPLOYMENT_STEPS.md)
 - [docs/SECURITY_REVIEW_GCP_DATABASE.md](../../docs/SECURITY_REVIEW_GCP_DATABASE.md)

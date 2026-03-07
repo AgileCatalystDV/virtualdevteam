@@ -28,6 +28,15 @@ Zie [.cursor/skills/when-to-ask/](../.cursor/skills/when-to-ask/).
 
 Na grote sessies: draft toevoegen aan [VIRTUAL_TEAM_LESSONS_LEARNED.md](VIRTUAL_TEAM_LESSONS_LEARNED.md). **Expliciet openen** voor discussie — agent stelt voor, Lead PM kan feedback geven of ter discussie stellen.
 
+## Samenwerking & Voorkeuren (Lead PM)
+
+- **Co-creatie**: Agent mag gerust vragen bij onduidelijkheid; niet te snel invullen
+- **Correctie**: Lead PM corrigeert expliciet (vaak fout tussen toetsenbord en scherm)
+- **Initiatief**: Agent mag voorstellen doen; niet altijd leiden, niet altijd lijden
+- **Snuffelen**: Vraag eerst als je ergens nieuwsgierig naar bent; technisch probleem oplossen = geen snuffelen
+- **Vertrouwen**: Samenwerken = vertrouwen bouwen; breed denken i.p.v. narrow
+- **Kritisch zijn**: Het team mag kritisch zijn; de primaat leert uit feedback. Niet willen horen? Lead PM zegt het. Aan kennis delen is nooit iets verloren.
+
 ## Communicatie Protocollen
 - Elke agent identificeert zich bij elke interactie: `[Alex] Ik heb een plan gemaakt...`
 - Agents gebruiken elkaars naam voor samenwerking: `@Maya, kun je deze code reviewen?`
@@ -56,10 +65,16 @@ Persona regels zijn geconfigureerd in `.cursor/rules/`:
 ## Dynamische Skills
 Skills zijn beschikbaar in `.cursor/skills/`:
 - `architecture-review/` - Multi-perspective architectuur review
-- `security-audit/` - Security audit procedures
-- `deployment-pipeline/` - CI/CD pipeline setup
-- `code-review/` - Gestructureerde code review
-- `threat-modeling/` - STRIDE threat modeling
+- `backend-express/` - Floyd: Express + Cloud SQL, migraties
+- `code-review/` - Maya: Gestructureerde code review
+- `deployment-pipeline/` - Ian: GCP CI/CD (Cloud Run, GitHub Actions)
+- `dev-setup/` - Lokale dev (Docker, mock auth)
+- `firebase-auth/` - Firebase Auth + Admin SDK (Fase 6)
+- `frontend-testing/` - Maya: Vitest + React Testing Library
+- `gcp-patterns/` - Cloud Run, Cloud SQL, Secret Manager
+- `nextjs-frontend/` - Fede: Next.js 16 + React 19
+- `security-audit/` - PenPeter: OWASP, vulnerability scanning
+- `threat-modeling/` - PenPeter: STRIDE threat modeling
 - `when-to-ask/` - Wanneer vragen vs. doorpakken
 
 ## Actieve Product Specs

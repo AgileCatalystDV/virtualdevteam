@@ -16,6 +16,12 @@ description: 'Complete security audit met OWASP Top 10, vulnerability scanning e
 - **SonarQube**: Code quality & security
 - **Burp Suite**: Manual penetration testing
 
+## GCP-specifiek (Subscription Tracker)
+- **Secret Manager**: Geen credentials in code; `db-url` voor DATABASE_URL
+- **Cloud Run IAM**: Least privilege voor service account
+- **CORS**: Beperk tot frontend Cloud Run URL
+- **Firebase Auth**: Token verify via Admin SDK — nooit client vertrouwen
+
 ## Audit Procedure
 1. **Automated Scan**: `npm run security:scan`
 2. **Dependency Check**: `npm audit`

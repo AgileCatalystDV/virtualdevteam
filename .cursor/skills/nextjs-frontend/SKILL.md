@@ -30,6 +30,14 @@ description: 'Fede: Next.js 16 + React 19 frontend patterns. Use when building o
 ### Node.js
 - **Node.js 20.9+** vereist — Node 18 niet meer ondersteund
 
+### Cloud Run (standalone output)
+Voor deploy naar Cloud Run:
+```js
+// next.config.ts
+const nextConfig = { output: "standalone" };
+```
+Dockerfile: multi-stage build, copy `.next/standalone`, `.next/static`, `public`. CMD: `node server.js`. Zie `subscription-tracker/Dockerfile`.
+
 ## Upgrade
 ```bash
 npx @next/codemod@canary upgrade latest
