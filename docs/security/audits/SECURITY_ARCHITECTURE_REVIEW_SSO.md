@@ -180,8 +180,8 @@ Als je **geen** Firebase wilt:
 
 ## 📎 Follow-up
 
-- **Alex**: [FIREBASE_SECURE_SETUP.md](./FIREBASE_SECURE_SETUP.md) — Validatie + secure setup guide
-- **Floyd**: [MOCK_TO_GCP_MIGRATION.md](../architecture/MOCK_TO_GCP_MIGRATION.md) — Mock → GCP aansluiting + api-client
+- **Alex**: [FIREBASE_SECURE_SETUP.md](../FIREBASE_SECURE_SETUP.md) — Validatie + secure setup guide
+- **Floyd**: [MOCK_TO_GCP_MIGRATION.md](../../architecture/MOCK_TO_GCP_MIGRATION.md) — Mock → GCP aansluiting + api-client
 
 ---
 

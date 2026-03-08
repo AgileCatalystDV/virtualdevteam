@@ -77,7 +77,7 @@ Welke GCP-architectuur past het best bij de Subscription Tracker, gegeven dat er
 | **API** | Express/FastAPI in container | REST endpoints |
 | **Database** | Cloud SQL PostgreSQL | Persistentie |
 | **Secrets** | Secret Manager | DB credentials, JWT keys |
-| **Auth** | Firebase Auth of Identity Platform | Login (Fase 2) — **Zie [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/SECURITY_ARCHITECTURE_REVIEW_SSO.md) voor SSO (Google, Facebook)** |
+| **Auth** | Firebase Auth of Identity Platform | Login (Fase 2) — **Zie [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/audits/SECURITY_ARCHITECTURE_REVIEW_SSO.md) voor SSO (Google, Facebook)** |
 
 ---
 
@@ -130,7 +130,7 @@ Bij hoger gebruik: schaal lineair. Cloud Run + Cloud SQL zijn cost-effective.
 
 ## 🔐 Security — PenPeter Review
 
-**Database architectuur**: [SECURITY_REVIEW_GCP_DATABASE.md](../security/SECURITY_REVIEW_GCP_DATABASE.md)
+**Database architectuur**: [SECURITY_REVIEW_GCP_DATABASE.md](../security/audits/SECURITY_REVIEW_GCP_DATABASE.md)
 
 PenPeter akkoord met Alex' aanbeveling. Aandacht: SSL config, dedicated DB user, CORS beperken.
 
@@ -138,7 +138,7 @@ PenPeter akkoord met Alex' aanbeveling. Aandacht: SSL config, dedicated DB user,
 
 ## 🔐 SSO (Google, Facebook) — PenPeter Review
 
-**Zie**: [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/SECURITY_ARCHITECTURE_REVIEW_SSO.md)
+**Zie**: [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/audits/SECURITY_ARCHITECTURE_REVIEW_SSO.md)
 
 **Aanbeveling PenPeter**: Firebase Auth voor eenvoudige SSO. Native GCP, minimale code, veilige token flow.
 

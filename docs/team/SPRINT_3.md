@@ -16,7 +16,7 @@ Security hardening van de Subscription Tracker en voorbereiding op backend-integ
 ### ✅ P0 — Afgerond
 | # | Taak | Status |
 |---|------|--------|
-| 1 | Security audit | ✅ [SECURITY_AUDIT_SPRINT3.md](../security/SECURITY_AUDIT_SPRINT3.md) |
+| 1 | Security audit | ✅ [SECURITY_AUDIT_SPRINT3.md](../security/audits/SECURITY_AUDIT_SPRINT3.md) |
 | 2 | Dependency audit | ✅ 0 vulnerabilities (subscription-tracker, crud-app) |
 | 3 | Security rapport | ✅ |
 
@@ -41,7 +41,7 @@ Security hardening van de Subscription Tracker en voorbereiding op backend-integ
 - **XSS**: React escaping OK? Notes/name in UI — geen `dangerouslySetInnerHTML`?
 - **OWASP Top 10**: Relevante punten voor client-only app (A03 Injection, A07 Auth, etc.)
 - **Dependencies**: `npm audit` in subscription-tracker en crud-app
-- **Output**: `docs/security/SECURITY_AUDIT_SPRINT3.md` volgens security-audit skill template
+- **Output**: `docs/security/audits/SECURITY_AUDIT_SPRINT3.md` volgens security-audit skill template
 
 **@Alex** — Documenteer API contract voor toekomstige backend. Zie specs: `GET/POST/PUT/DELETE /api/subscriptions` en `/api/categories`. OpenAPI 3.0 of simpele markdown-tabel volstaat.
 

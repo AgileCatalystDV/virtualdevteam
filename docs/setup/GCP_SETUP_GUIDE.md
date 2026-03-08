@@ -198,7 +198,7 @@ Vereist: Dockerfile + cloudbuild.yaml + `output: 'standalone'` in next.config (a
 - [DEV_SETUP.md](./DEV_SETUP.md) — Lokaal ontwikkelen (Docker of localhost)
 - [GCP_ARCHITECTURE.md](../architecture/GCP_ARCHITECTURE.md) — Waarom deze architectuur
 - [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — Technische details
-- [SECURITY_REVIEW_GCP_DATABASE.md](../security/SECURITY_REVIEW_GCP_DATABASE.md) — Security checklist
+- [SECURITY_REVIEW_GCP_DATABASE.md](../security/audits/SECURITY_REVIEW_GCP_DATABASE.md) — Security checklist
 
 ---
 

@@ -25,7 +25,7 @@ const allowedOrigins = [
 app.use(cors({ origin: allowedOrigins }));
 
 app.use(helmet());
-app.use(express.json());
+app.use(express.json({ limit: "50kb" }));
 
 // Health check (Cloud Run)
 app.get("/", (req, res) => res.json({ status: "ok", service: "subscription-tracker-api" }));
@@ -33,6 +33,14 @@ app.get("/", (req, res) => res.json({ status: "ok", service: "subscription-track
 // API v1 — auth middleware voor subscriptions (user-scoped data)
 app.use("/v1/categories", categoriesRouter);
 app.use("/v1/subscriptions", authMiddleware, subscriptionsRouter);
+
+// Globaal error handler — geen stack traces in productie (I2)
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err.message);
+  res.status(500).json({
+    error: process.env.NODE_ENV === "production" ? "Internal server error" : err.message,
+  });
+});
 
 app.listen(PORT, async () => {
   if (process.env.AUTH_MODE === "mock") {

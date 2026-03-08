@@ -131,11 +131,11 @@ De kritieke lekken (1–5) zijn **bewust uitgesteld** in de huidige sprint. Spri
 
 ## 4. Referenties
 
-- [MOCK_LOGIN.md](./MOCK_LOGIN.md) — Productie: nooit AUTH_MODE=mock
-- [FIREBASE_SECURE_SETUP.md](./FIREBASE_SECURE_SETUP.md) — Firebase configuratie
-- [SECURITY_IMPLEMENTATION_PLAN.md](./SECURITY_IMPLEMENTATION_PLAN.md) — Security roadmap
-- [SPRINT_6.md](../team/SPRINT_6.md) — GCP deploy planning
-- [RETRO_2026-02.md](../team/RETRO_2026-02.md) — Geen extra features parallel
+- [MOCK_LOGIN.md](../MOCK_LOGIN.md) — Productie: nooit AUTH_MODE=mock
+- [FIREBASE_SECURE_SETUP.md](../FIREBASE_SECURE_SETUP.md) — Firebase configuratie
+- [SECURITY_IMPLEMENTATION_PLAN.md](../SECURITY_IMPLEMENTATION_PLAN.md) — Security roadmap
+- [SPRINT_6.md](../../team/SPRINT_6.md) — GCP deploy planning
+- [RETRO_2026-02.md](../../team/RETRO_2026-02.md) — Geen extra features parallel
 
 ---
 

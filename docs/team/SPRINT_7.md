@@ -9,7 +9,7 @@
 ## 🎯 Sprint Doel
 
 1. **Auth**: Firebase token verify in backend — echte login, user-scoped data
-2. **Security**: Quick wins uit [SECURITY_AUDIT_THEHAMMER_2026-02.md](../security/SECURITY_AUDIT_THEHAMMER_2026-02.md) — geen extra GCP-kosten
+2. **Security**: Quick wins uit [SECURITY_AUDIT_THEHAMMER_2026-02.md](../security/audits/SECURITY_AUDIT_THEHAMMER_2026-02.md) — geen extra GCP-kosten
 
 ---
 
@@ -29,21 +29,23 @@
 |---|------|-------------------|---------|--------|
 | 4 | CORS beperken tot frontend Cloud Run URL + localhost | @Floyd | 5 min | ✅ |
 | 5 | Helmet toevoegen (security headers) | @Floyd | 15 min | ✅ |
-| 6 | Body size limit `express.json({ limit: "50kb" })` | @Floyd | 2 min |
-| 7 | Error handling bij mutaties (try/catch + feedback) | @Fede + @Floyd | 1–2 u |
+| 6 | Body size limit `express.json({ limit: "50kb" })` | @Floyd | 2 min | ✅ |
+| 7 | Globaal error handler (geen stack traces in prod) | @Floyd | 15 min | ✅ |
+| 8 | Error handling bij mutaties (try/catch + feedback) | @Fede | 1–2 u | Future |
 
-### P2 — Optioneel
+### P2 — Optioneel (future)
 
 | # | Taak | Verantwoordelijke |
 |---|------|-------------------|
-| 8 | Rate limiting (express-rate-limit) | @Floyd |
-| 9 | Server-side validatie (Zod) | @Floyd |
+| 9 | Rate limiting (express-rate-limit) | @Floyd |
+| 10 | Server-side validatie (Zod) | @Floyd |
 
 ---
 
 ## 📁 Referenties
 
-- [SECURITY_AUDIT_THEHAMMER_2026-02.md](../security/SECURITY_AUDIT_THEHAMMER_2026-02.md) — Fase A/B volgorde
+- [IMPLEMENTATION_PROPOSAL_THREAT_MODEL.md](../security/design/IMPLEMENTATION_PROPOSAL_THREAT_MODEL.md) — Floyd + Fede: quick wins, KISS, security-by-default
+- [SECURITY_AUDIT_THEHAMMER_2026-02.md](../security/audits/SECURITY_AUDIT_THEHAMMER_2026-02.md) — Fase A/B volgorde
 - [FIREBASE_SECURE_SETUP.md](../security/FIREBASE_SECURE_SETUP.md) — Firebase config
 - [MOCK_LOGIN.md](../security/MOCK_LOGIN.md) — Productie: nooit AUTH_MODE=mock
 - [DEPLOYMENT_GCP_MVP.md](../setup/DEPLOYMENT_GCP_MVP.md) — Frontend URL voor CORS

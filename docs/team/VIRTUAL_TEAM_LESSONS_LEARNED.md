@@ -99,6 +99,13 @@ De Lead PM / orchestrator heeft idealiter:
 - **Prioriteit:** GCP deploy eerst; geen extra features parallel — Lead PM focust op rode item
 - **Git commit trailer:** Workaround gedocumenteerd. **Improvement** (P2): root cause fix — niet eeuwig workarounden. Zie RETRO_2026-02 actie #2.
 
+### 2026-03-08 — Sprint 6 afgerond, security hardening, retro 2 (Retro approved)
+
+- **Wat:** GCP deploy live, Bill Shock, Cloud SQL stop/start, CORS + Helmet, threat model, security design, deployment automation next steps, security subdirs (design/audits/)
+- **Lering:** Co-creatie werkt —zelfde model, verschillende rollen; Lead PM uitermate tevreden over samenwerkingsmodel. KISS + security-by-default door hele keten (Floyd, Fede, PenPeter)
+- **Setup:** Geen subdirs — 7 bestanden nog overzichtelijk; wachten tot nodig
+- **Zie:** [RETRO_2026-03.md](RETRO_2026-03.md)
+
 ---
 
 ## 5. Retro-notes proces

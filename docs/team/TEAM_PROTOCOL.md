@@ -1,5 +1,6 @@
-# Team Protocol - Virtual Development Team
+# Team Protocol — Virtual Development Team
 
+**Laatste update**: 2026-03-08 (Co-PM)  
 Dit document bevat de uitgebreide protocollen voor het virtuele AI development team.
 
 ## Overzicht
@@ -67,9 +68,9 @@ Skills zijn beschikbaar in `.cursor/skills/`:
 - `architecture-review/` - Multi-perspective architectuur review
 - `backend-express/` - Floyd: Express + Cloud SQL, migraties
 - `code-review/` - Maya: Gestructureerde code review
-- `deployment-pipeline/` - Ian: GCP CI/CD (Cloud Run, GitHub Actions)
+- `deployment-pipeline/` - Ian: GCP CI/CD (Cloud Run, cloudbuild, GitHub Actions)
 - `dev-setup/` - Lokale dev (Docker, mock auth)
-- `firebase-auth/` - Firebase Auth + Admin SDK (Fase 6)
+- `firebase-auth/` - Firebase Auth + Admin SDK (Sprint 7)
 - `frontend-testing/` - Maya: Vitest + React Testing Library
 - `gcp-patterns/` - Cloud Run, Cloud SQL, Secret Manager
 - `nextjs-frontend/` - Fede: Next.js 16 + React 19
@@ -77,10 +78,33 @@ Skills zijn beschikbaar in `.cursor/skills/`:
 - `threat-modeling/` - PenPeter: STRIDE threat modeling
 - `when-to-ask/` - Wanneer vragen vs. doorpakken
 
+## Docs structuur
+- **security/**: design/ (design, threat model, implementatie), audits/ (reviews, audits), root (auth howto)
+- **setup/**: Geen subdirs — 7 bestanden nog overzichtelijk (KISS)
+
 ## Actieve Product Specs
 - **[Subscription Tracker](../architecture/SUBSCRIPTION_TRACKER_SPECS.md)** — Goedgekeurd. CRUD-app voor abonnementen met beperkte DB, marktvraag en monetization-potentieel.
 
 ## Sprints
 - **[Sprint 4](SPRINT_4.md)** — ✅ Afgerond. Mock API, GCP architectuur (Cloud Run + Cloud SQL).
-- **[Sprint 5](SPRINT_5.md)** — In uitvoering. GCP integratie: Cloud SQL, Cloud Run, Firebase Auth.
-- **[Sprint 6](SPRINT_6.md)** — Gepland. GCP deploy — Lead PM aan het werk, team ondersteunt.
+- **[Sprint 5](SPRINT_5.md)** — ✅ Afgerond. GCP integratie: Cloud SQL, Cloud Run, Firebase Auth (frontend).
+- **[Sprint 6](SPRINT_6.md)** — ✅ Afgerond. GCP deploy live — API + Frontend op Cloud Run, Bill Shock, security quick wins.
+- **[Sprint 7](SPRINT_7.md)** — Gepland. Firebase token verify + resterende security quick wins.
+
+## Leerbehoeften (per rol)
+*Co-PM — bijgewerkt 2026-03-08*
+
+| Rol | Prioriteit | Leerbehoefte |
+|-----|------------|--------------|
+| **Floyd** | P0 | Firebase Admin SDK, token verify, AUTH_MODE fail-fast |
+| **Fede** | P0 | Firebase Auth frontend flow; P1: Error handling mutaties |
+| **Ian** | P1 | GitHub Actions voor GCP, Cloud Build Firebase build args |
+| **Maya** | P2 | Firebase Auth testen, API error handling validatie |
+| **PenPeter** | P2 | OWASP LLM Top 10 (threat modeler), Firebase Auth security |
+| **Alex** | P2 | Dedicated DB user migratie, rate limiting trade-offs |
+
+**Referenties**: [firebase-auth skill](../../.cursor/skills/firebase-auth/SKILL.md), [FIREBASE_SECURE_SETUP.md](../security/FIREBASE_SECURE_SETUP.md)
+
+## Retros
+- **[RETRO_2026-02](RETRO_2026-02.md)** — Februari: GCP setup, docs herstructurering
+- **[RETRO_2026-03](RETRO_2026-03.md)** — Maart: Sprint 6 afgerond, security hardening, Lead PM tevreden over co-creatie

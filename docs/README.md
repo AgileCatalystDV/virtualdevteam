@@ -22,6 +22,8 @@ docs/
 ├── setup/              ← Dev + GCP setup
 ├── architecture/       ← Architectuur + specs
 ├── security/           ← Security + auth
+│   ├── design/         ← Design, threat model, implementatie
+│   └── audits/         ← Reviews, audits
 ├── team/               ← Team, protocol, sprints
 └── reviews/            ← Co-PM, QA, code reviews
 ```
@@ -37,6 +39,7 @@ docs/
 - [GCP_DEPLOYMENT_STEPS.md](./setup/GCP_DEPLOYMENT_STEPS.md) — Architectuurbeslissing, volgorde
 - [DEPLOYMENT_GCP.md](./setup/DEPLOYMENT_GCP.md) — Technische deployment details
 - [DEPLOYMENT_GCP_MVP.md](./setup/DEPLOYMENT_GCP_MVP.md) — MVP: start/stop, beveiligen, psql check (Firebase nog niet actief)
+- [DEPLOYMENT_AUTOMATION_NEXT_STEPS.md](./setup/DEPLOYMENT_AUTOMATION_NEXT_STEPS.md) — Ian: CI/CD next steps na auth
 
 ### architecture/ — Architectuur & specs
 - [SUBSCRIPTION_TRACKER_SPECS.md](./architecture/SUBSCRIPTION_TRACKER_SPECS.md) — Product specs
@@ -46,18 +49,29 @@ docs/
 - [MOCK_TO_GCP_MIGRATION.md](./architecture/MOCK_TO_GCP_MIGRATION.md) — Mock → GCP migratie
 
 ### security/ — Auth & security
+
+**Root** (auth howto, roadmap):
 - [MOCK_LOGIN.md](./security/MOCK_LOGIN.md) — Lokale dev zonder Firebase
 - [FIREBASE_SECURE_SETUP.md](./security/FIREBASE_SECURE_SETUP.md) — Firebase Auth (productie)
 - [SECURITY_IMPLEMENTATION_PLAN.md](./security/SECURITY_IMPLEMENTATION_PLAN.md) — Security roadmap
-- [SECURITY_ARCHITECTURE_REVIEW_SSO.md](./security/SECURITY_ARCHITECTURE_REVIEW_SSO.md) — SSO review
-- [SECURITY_REVIEW_GCP_DATABASE.md](./security/SECURITY_REVIEW_GCP_DATABASE.md) — DB security
-- [SECURITY_AUDIT_THEHAMMER_2026-02.md](./security/SECURITY_AUDIT_THEHAMMER_2026-02.md) — @TheHammer audit + POC-evaluatie + werkinschatting
+
+**design/** (design, threat model, implementatie):
+- [SECURITY_DESIGN_PRODUCTION_GCP.md](./security/design/SECURITY_DESIGN_PRODUCTION_GCP.md) — Security design productie (PenPeter, Ian, Alex)
+- [THREAT_MODEL_PRODUCTION_GCP.md](./security/design/THREAT_MODEL_PRODUCTION_GCP.md) — STRIDE threat model productie
+- [IMPLEMENTATION_PROPOSAL_THREAT_MODEL.md](./security/design/IMPLEMENTATION_PROPOSAL_THREAT_MODEL.md) — Floyd + Fede: quick wins, KISS, security-by-default
+
+**audits/** (reviews, audits):
+- [SECURITY_ARCHITECTURE_REVIEW_SSO.md](./security/audits/SECURITY_ARCHITECTURE_REVIEW_SSO.md) — SSO review
+- [SECURITY_REVIEW_GCP_DATABASE.md](./security/audits/SECURITY_REVIEW_GCP_DATABASE.md) — DB security
+- [SECURITY_AUDIT_THEHAMMER_2026-02.md](./security/audits/SECURITY_AUDIT_THEHAMMER_2026-02.md) — @TheHammer audit + POC-evaluatie + werkinschatting
+- [SECURITY_AUDIT_SPRINT3.md](./security/audits/SECURITY_AUDIT_SPRINT3.md) — Sprint 3 audit
 
 ### team/ — Team & protocol
 - [TEAM_PROTOCOL.md](./team/TEAM_PROTOCOL.md) — Workflow, checkpoint, when-to-ask
 - [VIRTUAL_TEAM_LESSONS_LEARNED.md](./team/VIRTUAL_TEAM_LESSONS_LEARNED.md) — Retro-notes
 - [TEAM_SKILLS_IMPROVEMENT_PROPOSAL.md](./team/TEAM_SKILLS_IMPROVEMENT_PROPOSAL.md) — Skills voorstel
-- [SPRINT_1.md](./team/SPRINT_1.md) … [SPRINT_5.md](./team/SPRINT_5.md) — Sprints
+- [SPRINT_1.md](./team/SPRINT_1.md) … [SPRINT_7.md](./team/SPRINT_7.md) — Sprints
+- [RETRO_2026-02.md](./team/RETRO_2026-02.md), [RETRO_2026-03.md](./team/RETRO_2026-03.md) — Retros
 
 ### reviews/ — Co-PM & QA
 - [CO_PM_DOCS_ALIGNMENT_REVIEW.md](./reviews/CO_PM_DOCS_ALIGNMENT_REVIEW.md)
