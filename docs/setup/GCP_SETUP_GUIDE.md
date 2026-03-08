@@ -47,11 +47,11 @@ gcloud services enable run.googleapis.com sqladmin.googleapis.com secretmanager.
 # Instance aanmaken (europe-west1 = België, GDPR)
 gcloud sql instances create subscription-tracker-db \
   --database-version=POSTGRES_16 \
-  --tier=db-f1-micro \
+  --edition=ENTERPRISE \
+  --tier=db-g1-small \
   --region=europe-west1
 
-# Als db-f1-micro niet beschikbaar: gebruik db-g1-small
-# --tier=db-g1-small
+# db-f1-micro is deprecated; db-g1-small is de aanbevolen kleine tier
 ```
 
 **Database + user** (via Console of gcloud):
@@ -91,11 +91,21 @@ echo -n "$CONN" | gcloud secrets create db-url --data-file=-
 
 ## Stap 3: Migratie (schema uitvoeren)
 
+**psql** (als `psql: command not found`): `brew install libpq` + PATH:
+- Intel Mac: `export PATH="/usr/local/opt/libpq/bin:$PATH"`
+- Apple Silicon: `export PATH="/opt/homebrew/opt/libpq/bin:$PATH"`
+
+**Application Default Credentials** (eenmalig, vóór eerste proxy-gebruik):
+```bash
+gcloud auth application-default login
+```
+De proxy gebruikt ADC, niet `gcloud auth login`. Browser opent → inloggen.
+
 ```bash
 # 1. Cloud SQL Proxy starten (in aparte terminal)
-cloud_sql_proxy -instances=JOUW_PROJECT_ID:europe-west1:subscription-tracker-db=tcp:5432
+cloud-sql-proxy JOUW_PROJECT_ID:europe-west1:subscription-tracker-db
 
-# 2. Migratie uitvoeren (proxy moet draaien)
+# 2. In andere terminal: migratie uitvoeren (proxy moet draaien)
 export DATABASE_URL="postgresql://postgres:JOUW_WACHTWOORD@localhost:5432/subscription_tracker"
 psql "$DATABASE_URL" -f migrations/001_initial_schema.sql
 
@@ -103,6 +113,8 @@ psql "$DATABASE_URL" -f migrations/001_initial_schema.sql
 psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM categories;"
 # Verwacht: 11 rijen
 ```
+
+**Let op**: Commando is `cloud-sql-proxy` (streepje), niet `cloud_sql_proxy`.
 
 ---
 
@@ -137,14 +149,16 @@ curl https://JOUW_API_URL/v1/categories
 ## Stap 5: Frontend configureren
 
 **Cloud Run** (GCP all the way — aanbevolen):
+
+`NEXT_PUBLIC_API_URL` moet bij **build time** ingesteld zijn (Next.js bakt het in). Gebruik `cloudbuild.yaml`:
+
 ```bash
 cd subscription-tracker
-gcloud run deploy subscription-tracker-web \
-  --source . \
-  --region europe-west1 \
-  --set-env-vars NEXT_PUBLIC_API_URL=https://JOUW_API_URL/v1
+gcloud builds submit --config cloudbuild.yaml \
+  --substitutions=_API_URL=https://JOUW_API_URL/v1
 ```
-Vereist Dockerfile + `output: 'standalone'` in next.config (aanwezig).
+
+Vereist: Dockerfile + cloudbuild.yaml + `output: 'standalone'` in next.config (aanwezig).
 
 **Vercel** (alternatief):
 1. `vercel --prod` in `subscription-tracker/`
@@ -156,11 +170,15 @@ Vereist Dockerfile + `output: 'standalone'` in next.config (aanwezig).
 
 | Probleem | Oplossing |
 |----------|-----------|
-| `db-f1-micro` niet beschikbaar | Gebruik `--tier=db-g1-small` |
-| "Permission denied" op secret | IAM: Cloud Run SA → Secret Manager Secret Accessor |
+| Cloud SQL tier | Gebruik `--edition=ENTERPRISE --tier=db-g1-small` (db-f1-micro is deprecated) |
+| Proxy: "could not find default credentials" | `gcloud auth application-default login` — ADC, niet `gcloud auth login` |
+| "cloud_sql_proxy: command not found" | Gebruik `cloud-sql-proxy` (streepje) na `brew install cloud-sql-proxy` |
+| `psql: command not found` | `brew install libpq` + PATH: Intel `export PATH="/usr/local/opt/libpq/bin:$PATH"` of Apple Silicon `export PATH="/opt/homebrew/opt/libpq/bin:$PATH"` |
+| Build: "permission_denied" op Storage | `gcloud projects add-iam-policy-binding PROJECT --member="serviceAccount:PROJECT_NUMBER-compute@developer.gserviceaccount.com" --role="roles/storage.objectViewer"` |
+| "Permission denied" op secret db-url | `gcloud secrets add-iam-policy-binding db-url --member="serviceAccount:PROJECT_NUMBER-compute@developer.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"` |
 | "Connection refused" bij deploy | Check `--add-cloudsql-instances` (exact format: `PROJECT:REGION:INSTANCE`) |
 | Migratie: "connection refused" | Cloud SQL Proxy moet draaien op localhost:5432 |
-| CORS errors in browser | Backend: beperk `cors({ origin: ['https://subscription-tracker-web-xxx.run.app'] })` (jouw frontend Cloud Run URL) |
+| CORS errors in browser | API staat CORS toe voor localhost + `CORS_ORIGIN` (default: subscription-tracker-web). Bij ander project: `--set-env-vars CORS_ORIGIN=https://jouw-frontend.run.app` bij API deploy |
 
 ---
 
@@ -178,9 +196,9 @@ Vereist Dockerfile + `output: 'standalone'` in next.config (aanwezig).
 ## Referenties
 
 - [DEV_SETUP.md](./DEV_SETUP.md) — Lokaal ontwikkelen (Docker of localhost)
-- [GCP_ARCHITECTURE.md](./GCP_ARCHITECTURE.md) — Waarom deze architectuur
+- [GCP_ARCHITECTURE.md](../architecture/GCP_ARCHITECTURE.md) — Waarom deze architectuur
 - [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — Technische details
-- [SECURITY_REVIEW_GCP_DATABASE.md](./SECURITY_REVIEW_GCP_DATABASE.md) — Security checklist
+- [SECURITY_REVIEW_GCP_DATABASE.md](../security/SECURITY_REVIEW_GCP_DATABASE.md) — Security checklist
 
 ---
 

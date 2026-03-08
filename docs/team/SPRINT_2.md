@@ -16,7 +16,7 @@ Kwaliteitsverbetering van de Subscription Tracker: code review door Maya, adress
 ### ✅ Afgerond (2026-02-14)
 | # | Taak | Status |
 |---|------|--------|
-| 1 | Code review Subscription Tracker | ✅ [CODE_REVIEW_SPRINT2.md](./CODE_REVIEW_SPRINT2.md) |
+| 1 | Code review Subscription Tracker | ✅ [CODE_REVIEW_SPRINT2.md](../reviews/CODE_REVIEW_SPRINT2.md) |
 | 2 | Adresseren blocking issues | ✅ Geen blocking issues |
 | 3 | Adresseren suggestions | ✅ getActiveSubscriptions, category validatie, getMonthlyEquivalent guard, SubscriptionCard fallback |
 | 4 | Polish | ✅ Toegankelijkheid categorie-select (aria-invalid, aria-describedby) |
@@ -36,7 +36,7 @@ Kwaliteitsverbetering van de Subscription Tracker: code review door Maya, adress
 - Functionele correctheid (edge cases: lege price, negatieve getallen)
 - Code kwaliteit (DRY, naming)
 - Foutafhandeling
-- Output: Code Review Report in `docs/CODE_REVIEW_SPRINT2.md`
+- Output: Code Review Report in `docs/reviews/CODE_REVIEW_SPRINT2.md`
 
 **@Fede** — Na ontvangst van Maya's rapport: adresseer blocking issues en suggestions. Daarna polish (loading states, betere empty states indien nodig).
 

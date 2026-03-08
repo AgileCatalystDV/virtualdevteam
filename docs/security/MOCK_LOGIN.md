@@ -19,7 +19,7 @@ Met `NEXT_PUBLIC_AUTH_MODE=mock` (frontend) en `AUTH_MODE=mock` (api-backend) ku
 
 ## Flow
 
-1. Start Docker + api-backend + frontend (zie [DEV_SETUP.md](./DEV_SETUP.md))
+1. Start Docker + api-backend + frontend (zie [DEV_SETUP.md](../setup/DEV_SETUP.md))
 2. Ga naar `/login`
 3. Klik **"Dev login (mock)"**
 4. Token wordt gezet, redirect naar dashboard

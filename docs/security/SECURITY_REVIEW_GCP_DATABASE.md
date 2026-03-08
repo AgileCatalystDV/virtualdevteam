@@ -114,7 +114,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO subscript
 ### Fase 1: Infrastructuur (security-first)
 
 1. **Cloud SQL**
-   - Instance: `europe-west1`, `db-f1-micro` of `db-g1-small`
+   - Instance: `europe-west1`, `db-g1-small` (ENTERPRISE edition)
    - **Geen public IP** (alleen private) of public IP + alleen authorized networks
    - Sterk wachtwoord voor app user (niet postgres)
 

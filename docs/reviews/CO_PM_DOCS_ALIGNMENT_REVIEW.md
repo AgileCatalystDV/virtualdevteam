@@ -55,7 +55,7 @@ De documentatie is **grotendeels consistent** na de recente GCP all the way besl
 
 **Probleem**: Optie B (Vercel) staat nog als gelijkwaardige keuze. Beslissing is Optie A.
 
-**Aanbeveling**: Voeg bovenaan toe: "**Beslissing (2026-02-28)**: Optie A — GCP all the way. Zie [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md)."
+**Aanbeveling**: Voeg bovenaan toe: "**Beslissing (2026-02-28)**: Optie A — GCP all the way. Zie [GCP_DEPLOYMENT_STEPS.md](../setup/GCP_DEPLOYMENT_STEPS.md)."
 
 ---
 

@@ -97,7 +97,8 @@ gcloud artifacts repositories create subscription-tracker --repository-format=do
 # 3. Cloud SQL instance
 gcloud sql instances create subscription-tracker-db \
   --database-version=POSTGRES_16 \
-  --tier=db-f1-micro \
+  --edition=ENTERPRISE \
+  --tier=db-g1-small \
   --region=europe-west1
 
 # 4. Database + user
@@ -170,10 +171,9 @@ Next.js config moet `output: 'standalone'` hebben.
 
 ```bash
 cd subscription-tracker
-gcloud run deploy subscription-tracker-web \
-  --source . \
-  --region europe-west1 \
-  --set-env-vars NEXT_PUBLIC_API_URL=https://subscription-tracker-api-xxx.run.app/v1
+# NEXT_PUBLIC_API_URL moet bij build time (cloudbuild), niet runtime
+gcloud builds submit --config cloudbuild.yaml \
+  --substitutions=_API_URL=https://subscription-tracker-api-xxx.run.app/v1
 ```
 
 **Optie 4b — Vercel**:
@@ -261,7 +261,7 @@ jobs:
 | Service | Geschat/maand |
 |---------|---------------|
 | Cloud Run (API + Frontend) | €0–5 |
-| Cloud SQL db-f1-micro | €0–15 |
+| Cloud SQL db-g1-small | €15–25 |
 | Secret Manager | €0–1 |
 | **Totaal** | **€0–25** |
 

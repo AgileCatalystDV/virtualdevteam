@@ -43,13 +43,16 @@ gcloud run deploy subscription-tracker-api \
   --set-secrets DATABASE_URL=db-url:latest
 ```
 
-### gcloud run deploy (Frontend)
+### Frontend deploy (cloudbuild — NEXT_PUBLIC_API_URL bij build time)
 ```bash
-gcloud run deploy subscription-tracker-web \
-  --source ./subscription-tracker \
-  --region europe-west1 \
-  --set-env-vars NEXT_PUBLIC_API_URL=https://api-url/v1
+cd subscription-tracker
+gcloud builds submit --config cloudbuild.yaml \
+  --substitutions=_API_URL=https://subscription-tracker-api-xxx.run.app/v1
 ```
+**Let op**: `--set-env-vars` werkt niet voor `NEXT_PUBLIC_*` — Next.js bakt die in bij build. Gebruik cloudbuild met `--build-arg`.
+
+## Git commit (wanneer agent niet kan committen)
+Als `git commit` faalt met `error: unknown option 'trailer'`: lokale git-config. **Workaround**: geef Lead PM de commando's om handmatig te runnen in terminal: `git add -A && git commit -m "message"`. Zie [DEV_SETUP.md](../../docs/setup/DEV_SETUP.md) Troubleshooting.
 
 ## Security
 - Geen secrets in code — Secret Manager
@@ -57,6 +60,6 @@ gcloud run deploy subscription-tracker-web \
 - CORS: beperk tot frontend Cloud Run URL
 
 ## References
-- [docs/GCP_DEPLOYMENT_STEPS.md](../../docs/GCP_DEPLOYMENT_STEPS.md)
-- [docs/DEPLOYMENT_GCP.md](../../docs/DEPLOYMENT_GCP.md)
-- [docs/LEAD_PM_GCP_STAPPENPLAN.md](../../docs/LEAD_PM_GCP_STAPPENPLAN.md)
+- [docs/setup/GCP_DEPLOYMENT_STEPS.md](../../docs/setup/GCP_DEPLOYMENT_STEPS.md)
+- [docs/setup/DEPLOYMENT_GCP.md](../../docs/setup/DEPLOYMENT_GCP.md)
+- [docs/setup/LEAD_PM_GCP_STAPPENPLAN.md](../../docs/setup/LEAD_PM_GCP_STAPPENPLAN.md)

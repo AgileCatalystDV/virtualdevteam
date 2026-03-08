@@ -172,7 +172,7 @@ Voor productie-deploy naar Google Cloud:
 
 1. **Stappenplan**: [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md) — volgorde en checklist
 2. **Volledige instructies**: [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — gcloud commands, env vars, CI/CD voorstel
-3. **Pre-deploy checklist**: Zie GCP_DEPLOYMENT_STEPS.md
+3. **Pre-deploy checklist**: Zie [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md)
 
 ---
 
@@ -180,9 +180,10 @@ Voor productie-deploy naar Google Cloud:
 
 | Probleem | Oplossing |
 |---------|-----------|
-| `psql: command not found` | Gebruik **Optie 2b** (docker exec) — geen psql nodig op je Mac. Of: `brew install libpq` en `export PATH="/opt/homebrew/opt/libpq/bin:$PATH"` |
+| `psql: command not found` | Gebruik **Optie 2b** (docker exec) — geen psql nodig op je Mac. Of: `brew install libpq` + PATH: Intel `export PATH="/usr/local/opt/libpq/bin:$PATH"` of Apple Silicon `export PATH="/opt/homebrew/opt/libpq/bin:$PATH"` |
 | Docker container start niet | `docker compose up -d` opnieuw; check met `docker compose ps` |
 | Poort 5432 in gebruik | Stop lokale Postgres: `brew services stop postgresql@16` of wijzig poort in docker-compose |
+| **Git commit faalt** (`error: unknown option 'trailer'`) | Lokale git-config voegt trailers toe die jouw git-versie niet ondersteunt. **Workaround**: run commits handmatig in de terminal: `git add -A && git commit -m "jouw message"`. Of check `git config --global --list` voor `commit.template` of `trailer` en verwijder/aanpas. |
 
 ---
 
@@ -191,9 +192,9 @@ Voor productie-deploy naar Google Cloud:
 - [LEAD_PM_GCP_STAPPENPLAN.md](./LEAD_PM_GCP_STAPPENPLAN.md) — **Start hier** — Simpel stappenplan voor GCP (Lead PM)
 - [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md) — GCP all the way stappenplan
 - [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) — Productie setup (gcloud commands)
-- [MOCK_LOGIN.md](./MOCK_LOGIN.md) — Mock login flow (lokaal zonder Firebase)
-- [migrations/001_initial_schema.sql](../migrations/001_initial_schema.sql)
-- [migrations/002_mock_user.sql](../migrations/002_mock_user.sql)
+- [MOCK_LOGIN.md](../security/MOCK_LOGIN.md) — Mock login flow (lokaal zonder Firebase)
+- [migrations/001_initial_schema.sql](../../migrations/001_initial_schema.sql)
+- [migrations/002_mock_user.sql](../../migrations/002_mock_user.sql)
 
 ---
 

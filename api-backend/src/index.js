@@ -1,6 +1,6 @@
 /**
  * Subscription Tracker API — Express backend voor Cloud Run
- * @Floyd — Sprint 5
+ * @Floyd — Sprint 5, 7 (CORS + Helmet)
  *
  * Base path: /v1 (NEXT_PUBLIC_API_URL = https://api.xxx.run.app/v1)
  * AUTH_MODE=mock → mock token voor lokale dev
@@ -8,6 +8,7 @@
 
 import express from "express";
 import cors from "cors";
+import helmet from "helmet";
 import { authMiddleware, ensureMockUser } from "./auth.js";
 import { categoriesRouter } from "./routes/categories.js";
 import { subscriptionsRouter } from "./routes/subscriptions.js";
@@ -15,7 +16,15 @@ import { subscriptionsRouter } from "./routes/subscriptions.js";
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
+// CORS — frontend Cloud Run URL + localhost voor dev
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  process.env.CORS_ORIGIN || "https://subscription-tracker-web-761770841827.europe-west1.run.app",
+].filter(Boolean);
+app.use(cors({ origin: allowedOrigins }));
+
+app.use(helmet());
 app.use(express.json());
 
 // Health check (Cloud Run)

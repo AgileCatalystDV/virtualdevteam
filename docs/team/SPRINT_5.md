@@ -53,7 +53,7 @@ Implementatie van de GCP-architectuur zoals gedocumenteerd. Naadloze overgang va
 
 ## 📢 Directieven
 
-**@Floyd** — Volg [MOCK_TO_GCP_MIGRATION.md](./MOCK_TO_GCP_MIGRATION.md) voor schema (users, user_id op subscriptions). API contract blijft identiek. Token verify via Firebase Admin SDK op Cloud Run.
+**@Floyd** — Volg [MOCK_TO_GCP_MIGRATION.md](../architecture/MOCK_TO_GCP_MIGRATION.md) voor schema (users, user_id op subscriptions). API contract blijft identiek. Token verify via Firebase Admin SDK op Cloud Run.
 
 **@Ian** — Cloud Run deploy met Secret Manager. Regio `europe-west1` voor GDPR.
 
@@ -63,10 +63,10 @@ Implementatie van de GCP-architectuur zoals gedocumenteerd. Naadloze overgang va
 
 ## 📁 Referentie
 
-- [GCP_ARCHITECTURE.md](./GCP_ARCHITECTURE.md)
-- [FIREBASE_SECURE_SETUP.md](./FIREBASE_SECURE_SETUP.md)
-- [MOCK_TO_GCP_MIGRATION.md](./MOCK_TO_GCP_MIGRATION.md)
-- [API_CONTRACT.md](./API_CONTRACT.md)
+- [GCP_ARCHITECTURE.md](../architecture/GCP_ARCHITECTURE.md)
+- [FIREBASE_SECURE_SETUP.md](../security/FIREBASE_SECURE_SETUP.md)
+- [MOCK_TO_GCP_MIGRATION.md](../architecture/MOCK_TO_GCP_MIGRATION.md)
+- [API_CONTRACT.md](../architecture/API_CONTRACT.md)
 
 ---
 

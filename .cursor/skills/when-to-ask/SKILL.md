@@ -45,4 +45,4 @@ Zal ik zo starten?
 
 ## Retro-notes
 
-Na grote sessies: draft toevoegen aan `docs/VIRTUAL_TEAM_LESSONS_LEARNED.md`. **Expliciet openen** voor discussie — "Ik stel voor om dit toe te voegen aan lessons learned, feedback welkom."
+Na grote sessies: draft toevoegen aan `docs/team/VIRTUAL_TEAM_LESSONS_LEARNED.md`. **Expliciet openen** voor discussie — "Ik stel voor om dit toe te voegen aan lessons learned, feedback welkom."

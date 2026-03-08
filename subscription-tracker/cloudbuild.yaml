@@ -1,0 +1,37 @@
+# Frontend build + deploy — NEXT_PUBLIC_API_URL moet bij build time ingesteld zijn
+# @Ian — Fix: Next.js bakt NEXT_PUBLIC_* in bij build, runtime --set-env-vars werkt niet
+#
+# Gebruik:
+#   gcloud builds submit --config cloudbuild.yaml \
+#     --substitutions=_API_URL=https://subscription-tracker-api-761770841827.europe-west1.run.app/v1
+
+substitutions:
+  _API_URL: ''  # Verplicht: API base URL (bijv. https://subscription-tracker-api-xxx.run.app/v1)
+
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/${PROJECT_ID}/subscription-tracker-web'
+      - '--build-arg'
+      - 'NEXT_PUBLIC_API_URL=${_API_URL}'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/${PROJECT_ID}/subscription-tracker-web']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'subscription-tracker-web'
+      - '--image'
+      - 'gcr.io/${PROJECT_ID}/subscription-tracker-web'
+      - '--region'
+      - 'europe-west1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+
+images:
+  - 'gcr.io/${PROJECT_ID}/subscription-tracker-web'

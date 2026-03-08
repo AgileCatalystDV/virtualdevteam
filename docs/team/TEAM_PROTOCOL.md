@@ -3,7 +3,7 @@
 Dit document bevat de uitgebreide protocollen voor het virtuele AI development team.
 
 ## Overzicht
-Zie [AGENTS.md](../AGENTS.md) in de project root voor het team handboek en basis protocol.
+Zie [AGENTS.md](../../AGENTS.md) in de project root voor het team handboek en basis protocol.
 
 ## Workflow: Checkpoint & When to Ask
 
@@ -22,11 +22,11 @@ Bij **nieuwe features**, **refactoring** of **architectuurwijzigingen**: geef ee
 - **Vragen:** security, breaking changes, nieuwe dependencies, API-contract wijzigingen
 - **Doorpakken:** bugfixes, kleine UI, documentatie, tests
 
-Zie [.cursor/skills/when-to-ask/](../.cursor/skills/when-to-ask/).
+Zie [.cursor/skills/when-to-ask/](../../.cursor/skills/when-to-ask/).
 
 ### Retro-notes
 
-Na grote sessies: draft toevoegen aan [VIRTUAL_TEAM_LESSONS_LEARNED.md](VIRTUAL_TEAM_LESSONS_LEARNED.md). **Expliciet openen** voor discussie — agent stelt voor, Lead PM kan feedback geven of ter discussie stellen.
+Na grote sessies: draft toevoegen aan [VIRTUAL_TEAM_LESSONS_LEARNED.md](./VIRTUAL_TEAM_LESSONS_LEARNED.md). **Expliciet openen** voor discussie — agent stelt voor, Lead PM kan feedback geven of ter discussie stellen.
 
 ## Samenwerking & Voorkeuren (Lead PM)
 
@@ -78,8 +78,9 @@ Skills zijn beschikbaar in `.cursor/skills/`:
 - `when-to-ask/` - Wanneer vragen vs. doorpakken
 
 ## Actieve Product Specs
-- **[Subscription Tracker](SUBSCRIPTION_TRACKER_SPECS.md)** — Goedgekeurd. CRUD-app voor abonnementen met beperkte DB, marktvraag en monetization-potentieel.
+- **[Subscription Tracker](../architecture/SUBSCRIPTION_TRACKER_SPECS.md)** — Goedgekeurd. CRUD-app voor abonnementen met beperkte DB, marktvraag en monetization-potentieel.
 
 ## Sprints
 - **[Sprint 4](SPRINT_4.md)** — ✅ Afgerond. Mock API, GCP architectuur (Cloud Run + Cloud SQL).
-- **[Sprint 5](SPRINT_5.md)** — Gepland. GCP integratie: Cloud SQL, Cloud Run, Firebase Auth.
+- **[Sprint 5](SPRINT_5.md)** — In uitvoering. GCP integratie: Cloud SQL, Cloud Run, Firebase Auth.
+- **[Sprint 6](SPRINT_6.md)** — Gepland. GCP deploy — Lead PM aan het werk, team ondersteunt.

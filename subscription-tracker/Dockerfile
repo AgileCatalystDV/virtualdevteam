@@ -1,7 +1,10 @@
 # Subscription Tracker Frontend — Cloud Run (Next.js standalone)
 # @Ian — Sprint 5
+# NEXT_PUBLIC_API_URL moet bij build time ingesteld zijn (Next.js bakt het in)
 
 FROM node:20-slim AS builder
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci

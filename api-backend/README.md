@@ -21,7 +21,7 @@ export DATABASE_URL="postgresql://user:pass@localhost:5432/subscription_tracker"
 npm install && npm run dev
 ```
 
-Zie [docs/DEV_SETUP.md](../docs/DEV_SETUP.md) voor volledige dev setup (Docker + localhost).
+Zie [docs/setup/DEV_SETUP.md](../docs/setup/DEV_SETUP.md) voor volledige dev setup (Docker + localhost).
 
 API op http://localhost:8080
 

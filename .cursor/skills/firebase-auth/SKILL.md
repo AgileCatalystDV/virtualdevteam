@@ -36,6 +36,6 @@ description: 'Firebase Auth + Admin SDK patterns. Use when implementing login, t
 - **Productie**: Nooit mock — Firebase verify verplicht
 
 ## References
-- [docs/FIREBASE_SECURE_SETUP.md](../../docs/FIREBASE_SECURE_SETUP.md)
-- [docs/MOCK_LOGIN.md](../../docs/MOCK_LOGIN.md)
-- [docs/SECURITY_IMPLEMENTATION_PLAN.md](../../docs/SECURITY_IMPLEMENTATION_PLAN.md)
+- [docs/security/FIREBASE_SECURE_SETUP.md](../../docs/security/FIREBASE_SECURE_SETUP.md)
+- [docs/security/MOCK_LOGIN.md](../../docs/security/MOCK_LOGIN.md)
+- [docs/security/SECURITY_IMPLEMENTATION_PLAN.md](../../docs/security/SECURITY_IMPLEMENTATION_PLAN.md)

@@ -51,16 +51,32 @@ Alles draait in **Google Cloud**, regio **europe-west1** (België, GDPR-vriendel
 
 ### 0.3 gcloud CLI installeren
 
+**Let op**: De cask `google-cloud-cli` bestaat niet in Homebrew. Gebruik `google-cloud-sdk` (levert dezelfde gcloud CLI).
+
 ```bash
 # macOS (Homebrew)
-brew install --cask google-cloud-cli
+brew install --cask google-cloud-sdk
 ```
+
+**Na de installatie** — PATH instellen (anders vindt de terminal `gcloud` niet):
+
+```bash
+# In de huidige sessie (direct testen):
+export PATH="/usr/local/share/google-cloud-sdk/bin:$PATH"
+gcloud --version   # Check of het werkt
+```
+
+**Permanent** (optioneel): voeg toe aan `~/.bashrc` of `~/.zshrc`:
+```bash
+export PATH="/usr/local/share/google-cloud-sdk/bin:$PATH"
+```
+*(Nieuwe terminal openen of `source ~/.bashrc` / `source ~/.zshrc`)*
 
 Daarna inloggen:
 
 ```bash
 gcloud auth login
-gcloud config set project JOUW_PROJECT_ID
+gcloud config set project JOUW_PROJECT_ID - subscription-tracker-21713
 ```
 
 **Check**: `gcloud auth list` — je moet ingelogd zijn.
@@ -84,16 +100,19 @@ gcloud services enable run.googleapis.com sqladmin.googleapis.com secretmanager.
 ```bash
 gcloud sql instances create subscription-tracker-db \
   --database-version=POSTGRES_16 \
-  --tier=db-f1-micro \
+  --edition=ENTERPRISE \
+  --tier=db-g1-small \
   --region=europe-west1
 ```
 
+**Let op**: `db-f1-micro` is niet meer beschikbaar in alle regio's. Gebruik `db-g1-small` (1 vCPU, 1.7 GB RAM). `--edition=ENTERPRISE` is vereist voor shared-core tiers.
+
 **Duur**: ~5–10 minuten.  
-**Kosten**: db-f1-micro ≈ €0–15/maand.
+**Kosten**: db-g1-small ≈ €15–25/maand.
 
 ---
 
-## Fase 2: Secret Manager
+## Fase 2: Secret Manager 
 
 **Wat**: Veilige opslag voor het database-wachtwoord. Geen wachtwoord in code of git.
 
@@ -116,7 +135,7 @@ gcloud sql instances create subscription-tracker-db \
 
 3. Connection string in Secret Manager zetten:
    ```bash
-   CONN="postgresql://postgres:JOUW_WACHTWOORD@/subscription_tracker?host=/cloudsql/JOUW_PROJECT_ID:europe-west1:subscription-tracker-db"
+   CONN="postgresql://postgres:JOUW_WACHTWOORD@/subscription_tracker?host=/cloudsql/subscription-tracker-21713:europe-west1:subscription-tracker-db"
    echo -n "$CONN" | gcloud secrets create db-url --data-file=-
    ```
 
@@ -128,21 +147,44 @@ gcloud sql instances create subscription-tracker-db \
 
 **Hoe**: Cloud SQL Proxy (verbindt lokaal met Cloud SQL) + psql.
 
+**psql installeren** (als `psql: command not found`):
+```bash
+brew install libpq
+# PATH toevoegen — kies het pad dat bij jouw Mac hoort:
+# Intel Mac (Homebrew in /usr/local):
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+# Apple Silicon (Homebrew in /opt/homebrew):
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+# Permanent: voeg de juiste regel toe aan ~/.bashrc of ~/.zshrc
+# Na brew install: check de Caveats voor het exacte pad
+```
+
 **Cloud SQL Proxy installeren** (eenmalig):
 ```bash
 brew install cloud-sql-proxy
 # Of: https://cloud.google.com/sql/docs/postgres/connect-auth-proxy#install
 ```
 
+**Application Default Credentials** (eenmalig, vóór eerste proxy-gebruik):
+De proxy gebruikt ADC, niet `gcloud auth login`. Voer uit:
+```bash
+gcloud auth application-default login
+```
+Browser opent → inloggen. Daarna kan de proxy verbinden.
+
+**Migratie uitvoeren**:
 ```bash
 # 1. Proxy starten (laat draaien in aparte terminal)
-cloud_sql_proxy -instances=JOUW_PROJECT_ID:europe-west1:subscription-tracker-db=tcp:5432
+# Vervang JOUW_PROJECT_ID door je project ID (bijv. subscription-tracker-21713)
+cloud-sql-proxy JOUW_PROJECT_ID:europe-west1:subscription-tracker-db
 
-# 2. Migratie uitvoeren
+# 2. In een andere terminal: migratie uitvoeren
 export DATABASE_URL="postgresql://postgres:JOUW_WACHTWOORD@localhost:5432/subscription_tracker"
 psql "$DATABASE_URL" -f migrations/001_initial_schema.sql
 psql "$DATABASE_URL" -f migrations/002_mock_user.sql
 ```
+
+**Let op**: Het commando is `cloud-sql-proxy` (streepje). De oude `cloud_sql_proxy` (underscore) is deprecated.
 
 **Check**: `psql "$DATABASE_URL" -c "SELECT COUNT(*) FROM categories;"` — verwacht: 11.
 
@@ -151,6 +193,22 @@ psql "$DATABASE_URL" -f migrations/002_mock_user.sql
 ## Fase 4: API deployen
 
 **Wat**: API (Express) op Cloud Run zetten. De API praat met de database via Secret Manager.
+
+**IAM (eenmalig)** — Als deploy faalt met permission errors, voer uit (vervang PROJECT_ID en PROJECT_NUMBER):
+```bash
+# Project number ophalen:
+gcloud projects describe JOUW_PROJECT_ID --format="value(projectNumber)"
+
+# 1. Build kan source niet lezen uit Storage:
+gcloud projects add-iam-policy-binding JOUW_PROJECT_ID \
+  --member="serviceAccount:PROJECT_NUMBER-compute@developer.gserviceaccount.com" \
+  --role="roles/storage.objectViewer"
+
+# 2. Cloud Run kan secret db-url niet lezen:
+gcloud secrets add-iam-policy-binding db-url \
+  --member="serviceAccount:PROJECT_NUMBER-compute@developer.gserviceaccount.com" \
+  --role="roles/secretmanager.secretAccessor"
+```
 
 ```bash
 cd api-backend
@@ -173,16 +231,17 @@ gcloud run deploy subscription-tracker-api \
 
 **Wat**: Next.js UI op Cloud Run. De frontend moet weten waar de API staat.
 
+**Belangrijk**: `NEXT_PUBLIC_API_URL` moet bij **build time** ingesteld zijn (Next.js bakt het in). `--set-env-vars` (runtime) werkt niet. Gebruik `cloudbuild.yaml` met build-arg:
+
 ```bash
 cd subscription-tracker
 
-gcloud run deploy subscription-tracker-web \
-  --source . \
-  --region europe-west1 \
-  --set-env-vars NEXT_PUBLIC_API_URL=https://JOUW_API_URL/v1
+# Vervang JOUW_API_URL door de URL uit Fase 4 (bijv. https://subscription-tracker-api-761770841827.europe-west1.run.app)
+gcloud builds submit --config cloudbuild.yaml \
+  --substitutions=_API_URL=https://subscription-tracker-api-761770841827.europe-west1.run.app/v1
 ```
 
-**Output**: Een URL zoals `https://subscription-tracker-web-xxx.run.app`. **Dat is je app.**
+**Output**: Build + deploy. Frontend URL: `https://subscription-tracker-web-xxx.run.app`. **Dat is je app.**
 
 ---
 
@@ -225,18 +284,18 @@ gcloud run deploy subscription-tracker-web \
 | [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) | Copy-paste commands | Alle gcloud-commando's, troubleshooting, Cloud SQL Proxy |
 | [DEPLOYMENT_GCP.md](./DEPLOYMENT_GCP.md) | Technische details | Architectuur, CI/CD, security |
 | [GCP_DEPLOYMENT_STEPS.md](./GCP_DEPLOYMENT_STEPS.md) | Volgorde | Checklist, rollback |
-| [FIREBASE_SECURE_SETUP.md](./FIREBASE_SECURE_SETUP.md) | Auth (later) | Firebase configuratie, security |
+| [FIREBASE_SECURE_SETUP.md](../security/FIREBASE_SECURE_SETUP.md) | Auth (later) | Firebase configuratie, security |
 
 ---
 
 ## Checklist
 
-- [ ] GCP project + billing
-- [ ] gcloud CLI geïnstalleerd + `gcloud auth login`
-- [ ] Cloud SQL instance
-- [ ] Database + wachtwoord
-- [ ] Secret Manager (db-url)
-- [ ] Migratie 001 + 002 uitgevoerd
+- [X] GCP project + billing
+- [X] gcloud CLI geïnstalleerd + `gcloud auth login`
+- [X] Cloud SQL instance
+- [X] Database + wachtwoord
+- [X] Secret Manager (db-url)
+- [X] Migratie 001 + 002 uitgevoerd
 - [ ] API gedeployed
 - [ ] Frontend gedeployed
 - [ ] App werkt: frontend URL → categories laden

@@ -32,7 +32,7 @@ De Lead PM zet GCP **zelf** op. De huidige docs veronderstellen enige GCP-ervari
 | **Dedicated DB user** | PenPeter adviseert `subscription_tracker_app`; DEPLOYMENT gebruikt `postgres` | Ian: SQL + gcloud voor app user |
 | **Placeholder vervangen** | `PROJECT_ID`, `user:pass`, `GEHEIM` — waar vul je in? | Ian: Checklist met concrete stappen |
 | **Volgorde + validatie** | Welke stap eerst? Hoe check je of het werkt? | Ian: Volgorde + smoke tests |
-| **db-f1-micro beschikbaarheid** | Niet alle regio's hebben db-f1-micro | Ian: Alternatief (db-g1-small) |
+| **Cloud SQL tier** | db-f1-micro deprecated → gebruik db-g1-small + ENTERPRISE | Ian: Stappenplan bijgewerkt |
 
 ---
 
@@ -76,7 +76,7 @@ De Lead PM zet GCP **zelf** op. De huidige docs veronderstellen enige GCP-ervari
 8. **Troubleshooting**
    - "Connection refused" → Cloud SQL instance running? `--add-cloudsql-instances` correct?
    - "Permission denied" op secret → IAM voor Cloud Run SA
-   - "db-f1-micro not available" → gebruik `db-g1-small`
+   - Cloud SQL: `--edition=ENTERPRISE --tier=db-g1-small`
 
 ---
 
@@ -95,7 +95,7 @@ De Lead PM zet GCP **zelf** op. De huidige docs veronderstellen enige GCP-ervari
 
 De docs zijn **goed en consistent**. Voor self-setup door de Lead PM ontbreekt een **praktische, copy-paste vriendelijke guide** met pre-requisites, volgorde en validatiestappen. **@Ian** wordt gevraagd om **GCP_SETUP_GUIDE.md** toe te voegen.
 
-**Update**: Ian heeft [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) toegevoegd — copy-paste guide met pre-requisites, volgorde, troubleshooting.
+**Update**: Ian heeft [GCP_SETUP_GUIDE.md](../setup/GCP_SETUP_GUIDE.md) toegevoegd — copy-paste guide met pre-requisites, volgorde, troubleshooting.
 
 ---
 

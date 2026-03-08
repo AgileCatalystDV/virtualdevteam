@@ -39,5 +39,5 @@ description: 'Floyd: Express 5 + Cloud SQL patterns. Use when building API route
 
 ## References
 - [api-backend/src/db.js](../../api-backend/src/db.js)
-- [docs/API_CONTRACT.md](../../docs/API_CONTRACT.md)
-- [docs/MOCK_TO_GCP_MIGRATION.md](../../docs/MOCK_TO_GCP_MIGRATION.md)
+- [docs/architecture/API_CONTRACT.md](../../docs/architecture/API_CONTRACT.md)
+- [docs/architecture/MOCK_TO_GCP_MIGRATION.md](../../docs/architecture/MOCK_TO_GCP_MIGRATION.md)

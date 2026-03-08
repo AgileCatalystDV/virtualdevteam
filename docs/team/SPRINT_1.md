@@ -41,7 +41,7 @@ Bouw de basis van de Subscription Tracker: data model, types, store, en volledig
 ---
 
 ## 📁 Technische Referentie
-- **Specs**: [SUBSCRIPTION_TRACKER_SPECS.md](./SUBSCRIPTION_TRACKER_SPECS.md)
+- **Specs**: [SUBSCRIPTION_TRACKER_SPECS.md](../architecture/SUBSCRIPTION_TRACKER_SPECS.md)
 - **Basis**: Bouw voort op `crud-app/` — hergebruik UI componenten (Button, Input, Card)
 - **Locatie**: Nieuwe app `subscription-tracker/` of uitbreiding binnen bestaande structuur
 

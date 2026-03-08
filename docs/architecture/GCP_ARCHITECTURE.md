@@ -37,11 +37,11 @@ Welke GCP-architectuur past het best bij de Subscription Tracker, gegeven dat er
    - Relationeel model past perfect bij subscriptions + categories
    - Bestaand data model (API_CONTRACT) sluit direct aan
    - Beheerd, backups, replicatie inbegrepen
-   - **Cloud SQL for PostgreSQL** — kleine instance (db-f1-micro) is goedkoop of binnen free tier
+   - **Cloud SQL for PostgreSQL** — kleine instance (db-g1-small) is goedkoop
 
 3. **Google Cloud abonnement**
    - Cloud Run free tier: 2 miljoen requests/maand
-   - Cloud SQL: db-f1-micro vaak binnen free tier of zeer laag
+   - Cloud SQL: db-g1-small ≈ €15–25/maand
    - Geen lock-in; migratie naar andere cloud is mogelijk
 
 ---
@@ -77,7 +77,7 @@ Welke GCP-architectuur past het best bij de Subscription Tracker, gegeven dat er
 | **API** | Express/FastAPI in container | REST endpoints |
 | **Database** | Cloud SQL PostgreSQL | Persistentie |
 | **Secrets** | Secret Manager | DB credentials, JWT keys |
-| **Auth** | Firebase Auth of Identity Platform | Login (Fase 2) — **Zie [SECURITY_ARCHITECTURE_REVIEW_SSO.md](./SECURITY_ARCHITECTURE_REVIEW_SSO.md) voor SSO (Google, Facebook)** |
+| **Auth** | Firebase Auth of Identity Platform | Login (Fase 2) — **Zie [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/SECURITY_ARCHITECTURE_REVIEW_SSO.md) voor SSO (Google, Facebook)** |
 
 ---
 
@@ -94,9 +94,9 @@ Welke GCP-architectuur past het best bij de Subscription Tracker, gegeven dat er
 
 ## 📋 Implementatiestappen (Optie A)
 
-**Handmatige setup**: Zie [GCP_SETUP_GUIDE.md](./GCP_SETUP_GUIDE.md) — copy-paste guide voor self-setup.
+**Handmatige setup**: Zie [GCP_SETUP_GUIDE.md](../setup/GCP_SETUP_GUIDE.md) — copy-paste guide voor self-setup.
 
-1. **Cloud SQL** — Maak PostgreSQL instance (db-f1-micro of db-g1-small)
+1. **Cloud SQL** — Maak PostgreSQL instance (db-g1-small, ENTERPRISE edition)
 2. **Schema** — Run migrations (subscriptions, categories tabellen)
 3. **API container** — Dockerfile voor Express/FastAPI, connect naar Cloud SQL
 4. **Cloud Run** — Deploy container, koppel Secret Manager voor DB URL
@@ -130,7 +130,7 @@ Bij hoger gebruik: schaal lineair. Cloud Run + Cloud SQL zijn cost-effective.
 
 ## 🔐 Security — PenPeter Review
 
-**Database architectuur**: [SECURITY_REVIEW_GCP_DATABASE.md](./SECURITY_REVIEW_GCP_DATABASE.md)
+**Database architectuur**: [SECURITY_REVIEW_GCP_DATABASE.md](../security/SECURITY_REVIEW_GCP_DATABASE.md)
 
 PenPeter akkoord met Alex' aanbeveling. Aandacht: SSL config, dedicated DB user, CORS beperken.
 
@@ -138,11 +138,11 @@ PenPeter akkoord met Alex' aanbeveling. Aandacht: SSL config, dedicated DB user,
 
 ## 🔐 SSO (Google, Facebook) — PenPeter Review
 
-**Zie**: [SECURITY_ARCHITECTURE_REVIEW_SSO.md](./SECURITY_ARCHITECTURE_REVIEW_SSO.md)
+**Zie**: [SECURITY_ARCHITECTURE_REVIEW_SSO.md](../security/SECURITY_ARCHITECTURE_REVIEW_SSO.md)
 
 **Aanbeveling PenPeter**: Firebase Auth voor eenvoudige SSO. Native GCP, minimale code, veilige token flow.
 
-**Alex validatie**: [FIREBASE_SECURE_SETUP.md](./FIREBASE_SECURE_SETUP.md) — Security recommendations gevalideerd, secure setup guide.
+**Alex validatie**: [FIREBASE_SECURE_SETUP.md](../security/FIREBASE_SECURE_SETUP.md) — Security recommendations gevalideerd, secure setup guide.
 
 **Floyd migratie**: [MOCK_TO_GCP_MIGRATION.md](./MOCK_TO_GCP_MIGRATION.md) — Hoe mock aansluit op GCP + SSO.
 

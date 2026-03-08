@@ -51,7 +51,7 @@ Subscription Tracker uses Cloud Run (API), Cloud SQL (PostgreSQL), Secret Manage
 
 ## References
 
-- [docs/LEAD_PM_GCP_STAPPENPLAN.md](../../docs/LEAD_PM_GCP_STAPPENPLAN.md) — Start voor Lead PM (geen ervaring)
-- [docs/GCP_SETUP_GUIDE.md](../../docs/GCP_SETUP_GUIDE.md)
-- [docs/GCP_DEPLOYMENT_STEPS.md](../../docs/GCP_DEPLOYMENT_STEPS.md)
-- [docs/SECURITY_REVIEW_GCP_DATABASE.md](../../docs/SECURITY_REVIEW_GCP_DATABASE.md)
+- [docs/setup/LEAD_PM_GCP_STAPPENPLAN.md](../../docs/setup/LEAD_PM_GCP_STAPPENPLAN.md) — Start voor Lead PM (geen ervaring)
+- [docs/setup/GCP_SETUP_GUIDE.md](../../docs/setup/GCP_SETUP_GUIDE.md)
+- [docs/setup/GCP_DEPLOYMENT_STEPS.md](../../docs/setup/GCP_DEPLOYMENT_STEPS.md)
+- [docs/security/SECURITY_REVIEW_GCP_DATABASE.md](../../docs/security/SECURITY_REVIEW_GCP_DATABASE.md)

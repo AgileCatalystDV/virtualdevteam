@@ -37,7 +37,7 @@ Lokaal ontwikkelen zonder GCP. Zelfde migrations en API code als productie. Alle
 **Tip**: `.env.local` / `api-backend/.env` — niet committen.
 
 ### Mock auth (lokaal)
-Met `AUTH_MODE=mock` + `NEXT_PUBLIC_AUTH_MODE=mock`: login pagina toont "Dev login (mock)" — geen Firebase nodig. Zie [MOCK_LOGIN.md](../../docs/MOCK_LOGIN.md).
+Met `AUTH_MODE=mock` + `NEXT_PUBLIC_AUTH_MODE=mock`: login pagina toont "Dev login (mock)" — geen Firebase nodig. Zie [MOCK_LOGIN.md](../../docs/security/MOCK_LOGIN.md).
 
 ## Validatie
 
@@ -71,5 +71,5 @@ services:
 
 ## References
 
-- [docs/DEV_SETUP.md](../../docs/DEV_SETUP.md)
+- [docs/setup/DEV_SETUP.md](../../docs/setup/DEV_SETUP.md)
 - [docker-compose.yml](../../docker-compose.yml)

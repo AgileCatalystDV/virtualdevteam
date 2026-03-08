@@ -19,7 +19,7 @@
 | # | Taak | Status |
 |---|------|--------|
 | 1 | Mock API (subscriptions, categories) | ✅ `app/api/v1/` — GET/POST/PUT/DELETE |
-| 2 | GCP architectuur aanbeveling | ✅ [GCP_ARCHITECTURE.md](./GCP_ARCHITECTURE.md) |
+| 2 | GCP architectuur aanbeveling | ✅ [GCP_ARCHITECTURE.md](../architecture/GCP_ARCHITECTURE.md) |
 
 ### P1 — Aanbevolen
 | # | Taak | Verantwoordelijke |
@@ -31,17 +31,17 @@
 
 ## 📢 Directieven
 
-**@Floyd** — Bouw mock API volgens [API_CONTRACT.md](./API_CONTRACT.md). Gebruik Next.js API routes in `subscription-tracker/app/api/` of aparte Express server. Alle endpoints retourneren mock data (zelfde structuur als huidige store).
+**@Floyd** — Bouw mock API volgens [API_CONTRACT.md](../architecture/API_CONTRACT.md). Gebruik Next.js API routes in `subscription-tracker/app/api/` of aparte Express server. Alle endpoints retourneren mock data (zelfde structuur als huidige store).
 
-**@Alex** — Gezien **Google Cloud abonnement**: adviseer beste architectuur voor Subscription Tracker. Overweeg o.a. Cloud Run, Cloud SQL, Firestore, Cloud Functions. Output: `docs/GCP_ARCHITECTURE.md`.
+**@Alex** — Gezien **Google Cloud abonnement**: adviseer beste architectuur voor Subscription Tracker. Overweeg o.a. Cloud Run, Cloud SQL, Firestore, Cloud Functions. Output: `docs/architecture/GCP_ARCHITECTURE.md`.
 
 **@Fede** — Na mock API: optioneel frontend aanpassen om van API te fetchen. Kan wachten tot echte backend.
 
 ---
 
 ## 📁 Referentie
-- [API_CONTRACT.md](./API_CONTRACT.md)
-- [SUBSCRIPTION_TRACKER_SPECS.md](./SUBSCRIPTION_TRACKER_SPECS.md)
+- [API_CONTRACT.md](../architecture/API_CONTRACT.md)
+- [SUBSCRIPTION_TRACKER_SPECS.md](../architecture/SUBSCRIPTION_TRACKER_SPECS.md)
 
 ---
 
