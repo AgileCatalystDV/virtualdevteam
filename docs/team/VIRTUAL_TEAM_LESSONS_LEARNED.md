@@ -90,14 +90,14 @@ De Lead PM / orchestrator heeft idealiter:
 |-----------------|-----------|
 | Clearbit API | Externe API's kunnen deprecaten; fallback (Google Favicon) |
 | Root package-lock.json | Verwarring bij module resolution; verwijderen |
-| Git commit (trailer) | Lokaal config; handmatige commit/push. **Workaround**: [DEV_SETUP.md](../setup/DEV_SETUP.md) Troubleshooting. **Improvement** (niet vergeten): root cause fix — `git config --global --list` zoek trailer, unset. Of `brew upgrade git`. Zie [RETRO_2026-02.md](RETRO_2026-02.md) actie #2. |
+| Git commit (trailer) | ✅ Opgelost — `brew upgrade git` → 2.53.0 (2026-03-08). Was: handmatige commit/push workaround. Root cause: git 2.14.3 kende `--trailer` niet. Zie [RETRO_2026-03.md](RETRO_2026-03.md) actie #3. |
 
 ### 2026-02-28 — GCP setup + docs herstructurering (Retro approved)
 
 - **Wat:** GCP all the way beslissing, Lead PM stappenplan, docs in subfolders (setup/architecture/security/team/reviews), skills review
 - **Lering:** Sparring (Ian + Alex) helpt bij onzekerheid; Co-PM docs alignment voorkomt drift
 - **Prioriteit:** GCP deploy eerst; geen extra features parallel — Lead PM focust op rode item
-- **Git commit trailer:** Workaround gedocumenteerd. **Improvement** (P2): root cause fix — niet eeuwig workarounden. Zie RETRO_2026-02 actie #2.
+- **Git commit trailer:** ✅ Opgelost — `brew upgrade git` → 2.53.0 (2026-03-08). Tech debt afgehandeld.
 
 ### 2026-03-08 — Sprint 6 afgerond, security hardening, retro 2 (Retro approved)
 
